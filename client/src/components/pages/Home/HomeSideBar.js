@@ -12,6 +12,8 @@ import React, { useContext } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded"
 import SupervisedUserCircleRoundedIcon from "@material-ui/icons/SupervisedUserCircleRounded"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStickyNote } from "@fortawesome/free-solid-svg-icons"
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 import { useNavigate } from "react-router-dom"
@@ -25,6 +27,11 @@ export const HomeSideBar = () => {
     authContext.theme === "dark"
       ? { background: "#121212", color: "whitesmoke" }
       : null
+
+  const iconStyle = {
+    fontSize: '1.4em',
+    marginLeft: '4px',
+  };
 
   return (
     <div className="side-bar">
@@ -96,7 +103,7 @@ export const HomeSideBar = () => {
             }}
           >
             <ListItemIcon style={styleTheme}>
-              <BookmarksRoundedIcon />
+              <FontAwesomeIcon icon={faStickyNote} style={iconStyle} />
             </ListItemIcon>
             <ListItemText
               primary={<Typography variant="button">Notices</Typography>}

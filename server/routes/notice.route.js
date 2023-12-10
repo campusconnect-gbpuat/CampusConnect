@@ -21,7 +21,7 @@ router.param("noticeId", getNoticeById);
 
 // Create notice
 router.post(
-	"/create/notice/:userId",
+	"/create/notice",
 	isSignedIn,
 	isAuthenticated,
 	isAdmin,

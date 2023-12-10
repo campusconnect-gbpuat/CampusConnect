@@ -245,12 +245,6 @@ export const Signup = () => {
                   navigate("/signup-campus")
                 }}
               >
-                <Typography variant="button" color="textSecondary">
-                  Signup as{" "}
-                  <Typography variant="button" color="textPrimary">
-                    Campus Admin
-                  </Typography>
-                </Typography>
               </Button>
             </Grid>
           </Grid>

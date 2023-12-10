@@ -20,6 +20,11 @@ exports.getNoticeById = (req, res, next, Id) => {
 // Create notice
 exports.createNotice = (req, res) => {
 	const { title, description, link } = req.body;
+	
+	// console.log(req);
+	console.log(title);
+	console.log(description);
+	console.log(link);
 	const newNotice = Notice({ title, description, link });
 	newNotice.save((err, notice) => {
 		if (err) {

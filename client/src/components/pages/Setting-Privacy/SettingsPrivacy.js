@@ -123,14 +123,14 @@ export const SettingsPrivacy = () => {
                               ********
                             </Typography>
                           </Grid>
-                          <Grid item xs={2}>
+                          {/* <Grid item xs={2}>
                             <a href="#">
                               <Typography className="text-right" style={styleTheme}>
                                 <FontAwesomeIcon icon={faEdit} />
                                 {" Reset"}
                               </Typography>
                             </a>
-                          </Grid>
+                          </Grid> */}
                         </Grid>
                       </li>
                     </ul>

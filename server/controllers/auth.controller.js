@@ -111,10 +111,11 @@ exports.isSignedIn = expressJWT({
 })
 
 // custom middleware
-exports.isAuthenticated = (req, res, next) => {
-  console.log(req.profile)
-  console.log(req.auth)
-  let check = req.profile && req.auth && req.profile._id == req.auth.id
+exports.isAuthenticated = async (req, res, next) => {
+  // console.log(req,"node")
+  const user = await User.findById(req.auth.id).exec()
+
+  let check = user._id.toString() === req.auth.id.toString()
   if (!check) {
     return res.status(403).json({
       errorMsg: "Access denied",
@@ -123,8 +124,11 @@ exports.isAuthenticated = (req, res, next) => {
   next()
 }
 
-exports.isAdmin = (req, res, next) => {
-  if (req.profile.role === 1 || req.profile.role === 0) {
+exports.isAdmin = async (req, res, next) => {
+  const user = await User.findById(req.auth.id).exec()
+  console.log(req)
+  // console.log(user,'isadmin')
+  if (user.role !== 2) {
     return res.status(403).json({
       errorMsg: "Access denied ! not admin",
     })

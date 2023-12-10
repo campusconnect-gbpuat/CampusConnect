@@ -22,7 +22,6 @@ import { Friends } from "../pages/Friends/Friends"
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity"
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy"
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks"
-import { CampusSignup } from "../Login/CampusSignup"
 import { Notice } from "../pages/Home/Notice/Notice"
 import { Events } from "../pages/Home/Events/Events"
 import { SimpleRoute } from "../auth/SimpleRoute"
@@ -178,7 +177,6 @@ export const Routing = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/signup" element={<SimpleRoute component={Signup} />} />
-            <Route path="/signup-campus" element={<SimpleRoute component={CampusSignup} />} />
             <Route path="/signin" element={<SimpleRoute component={Login} />} />
 
             <Route path="/" element={<PrivateRoute component={Post} />} />

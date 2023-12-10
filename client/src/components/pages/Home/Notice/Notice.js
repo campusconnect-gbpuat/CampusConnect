@@ -17,50 +17,55 @@ export const Notice = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log(noticeContext.notice);
   return (
     <Home>
       <div>
         {noticeContext.loading ? (
           <div>loading</div>
         ) : (
-          noticeContext.notice.map((not, index) => {
-            return (
-              <Card elevation={1} className="mb-3">
-                <CardContent>
-                  <Grid
-                    container
-                    justifyContent="space-between"
-                    alignItems="flex-start"
-                  >
-                    <Grid item>
-                      <Typography color="textSecondary" variant="caption">
-                        Notice no.{index + 100}
-                      </Typography>
+          Array.isArray(noticeContext.notice) && noticeContext.notice.length ? (
+            noticeContext.notice.map((not, index) => {
+              return (
+                <Card elevation={1} className="mb-3">
+                  <CardContent>
+                    <Grid
+                      container
+                      justifyContent="space-between"
+                      alignItems="flex-start"
+                    >
+                      <Grid item>
+                        <Typography color="textSecondary" variant="caption">
+                          Notice no.{index + 100}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="caption">
+                          {new Date(not.createdAt).toDateString()}
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography variant="caption">
-                        {new Date(not.createdAt).toDateString()}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Typography color="primary">{not.title}</Typography>
-                  <Typography variant="body1">{not.description}</Typography>
-                </CardContent>
-                <CardActions className="pt-0 px-3">
-                  <Button
-                    size="small"
-                    color="primary"
-                    variant="outlined"
-                    onClick={() => {
-                      window.open(`${not.link}`)
-                    }}
-                  >
-                    Link
-                  </Button>
-                </CardActions>
-              </Card>
-            )
-          })
+                    <Typography color="primary">{not.title}</Typography>
+                    <Typography variant="body1">{not.description}</Typography>
+                  </CardContent>
+                  <CardActions className="pt-0 px-3">
+                    <Button
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => {
+                        window.open(`${not.link}`)
+                      }}
+                    >
+                      Link
+                    </Button>
+                  </CardActions>
+                </Card>
+              )
+            })
+          ) : (
+            <div>No notices available</div>
+          )
         )}
       </div>
     </Home>

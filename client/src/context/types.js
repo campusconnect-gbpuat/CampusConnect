@@ -38,6 +38,8 @@ export const BLOG_SUCCESS = "blogs_success"
 export const NOTICE_LOADING = "notice_loading"
 export const NOTICE_ERROR = "notice_error"
 export const NOTICE_GET = "notice_get"
+export const NOTICE_CREATE = "notice_create"
+export const NOTICE_SUCCESS = "notice_success"
 
 //Events
 export const EVENT_LOADING = "notice_loading"

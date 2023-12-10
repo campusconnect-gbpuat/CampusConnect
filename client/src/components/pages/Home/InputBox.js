@@ -4,15 +4,17 @@ import { AuthContext } from "../../../context/authContext/authContext"
 import BrokenImageIcon from "@material-ui/icons/BrokenImage"
 import PollIcon from "@material-ui/icons/Poll"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEdit, faFeather, faGraduationCap } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faFeather, faGraduationCap, faStickyNote } from "@fortawesome/free-solid-svg-icons"
 import { PostModal } from "../Modals/PostModal"
 import { PostContext } from "../../../context/postContext/postContext"
 import { BlogModal } from "../Modals/BlogModal"
 import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PollModal } from "../Modals/PollModal"
+import { NoticeModal } from "../Modals/NoticeModal"
 import { API } from "../../../utils/proxy"
 import { PollContext } from "../../../context/pollContext/PollContext"
 import { AdsContext } from "../../../context/adsContext/AdsContext"
+import { NoticeContext } from "../../../context/noticeContext/NoticeContext"
 import { AdsModal } from "../Modals/AdsModal"
 
 export const InputBox = () => {
@@ -21,12 +23,17 @@ export const InputBox = () => {
   const blogContext = useContext(BlogContext)
   const pollContext = useContext(PollContext)
   const adsContext = useContext(AdsContext)
+  const noticeContext = useContext(NoticeContext)
   const [showPost, setShowPost] = useState(false)
   const [showBlog, setShowBlog] = useState(false)
   const [showPoll, setShowPoll] = useState(false)
   const [showAds, setShowAds] = useState(false)
+  const [showNotices, setShowNotices] = useState(false)
   const handleModalPoll = () => {
     setShowPoll(!showPoll)
+  }
+  const handleNotices = () => {
+    setShowNotices(!showNotices)
   }
   const handleModalPost = () => {
     // console.log(showPost)
@@ -82,6 +89,15 @@ export const InputBox = () => {
           pollFunction={pollContext.createPoll}
           poll={undefined}
           handleModal={handleModalPoll}
+        />
+      )}
+      {showNotices && (
+        <NoticeModal
+          modalTitle="Create Notice"
+          show={showNotices}
+          noticeFunction={noticeContext.createNotice}
+          notice={undefined}
+          handleModal={handleNotices}
         />
       )}
       <Paper elevation={3} variant="elevation" className="p-3 mb-3" style={styleTheme}>
@@ -148,9 +164,16 @@ export const InputBox = () => {
           )}
           <Grid item>
             <Button onClick={handleModalPoll} startIcon={<PollIcon />} style={styleTheme}>
-              Poll
+              Create Poll
             </Button>
           </Grid>
+          {authContext.user.role === 2 && (
+            <Grid item>
+              <Button onClick={handleNotices} startIcon={<FontAwesomeIcon icon={faStickyNote} />} style={styleTheme}>
+                Add Notice
+              </Button>
+            </Grid>
+          )}
         </Grid>
       </Paper>
     </div>

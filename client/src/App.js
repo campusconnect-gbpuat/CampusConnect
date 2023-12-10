@@ -9,7 +9,6 @@ import { EventState } from "./context/eventContext/EventState"
 import { PollState } from "./context/pollContext/PollState"
 import { PostState } from "./context/postContext/PostState"
 import { UserState } from "./context/userContext/UserState"
-import Chat from './components/chat/Chat'
 
 export const App = () => {
   return (
@@ -21,7 +20,6 @@ export const App = () => {
               <AdsState>
                 <EventState>
                   <NoticeState>
-                    {/* <Chat /> */}
                     <Routing />
                   </NoticeState>
                 </EventState>
