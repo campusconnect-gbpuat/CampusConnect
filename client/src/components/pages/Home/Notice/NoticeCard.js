@@ -22,7 +22,7 @@ export const NoticeCard = () => {
   return (
     <div className="mt-3 notice-card">
       <h6>
-        <b>Updates</b>
+        <b>Site Updates</b>
         {authContext.user.role === 2 && (
           <FontAwesomeIcon icon={faPlusCircle} style={{ float: 'right' }} />
         )}

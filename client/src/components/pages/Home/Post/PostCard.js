@@ -187,8 +187,8 @@ export const PostCard = ({ post }) => {
                   Delete
                 </MenuItem>
               ) : null}
-              <MenuItem onClick={handleClose} style={styleTheme}>Share</MenuItem>
-              <MenuItem onClick={handleClose} style={styleTheme}>Bookmark</MenuItem>
+              {/* <MenuItem onClick={handleClose} style={styleTheme}>Share</MenuItem>
+              <MenuItem onClick={handleClose} style={styleTheme}>Bookmark</MenuItem> */}
               <MenuItem onClick={handleClose} style={styleTheme}>Report Post</MenuItem>
             </Menu>
           </>

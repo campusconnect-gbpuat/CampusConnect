@@ -45,7 +45,7 @@ export const NoticeState = ({ children }) => {
         type: NOTICE_LOADING,
         payload: true,
       })
-      console.log(formData,"testing1")
+      console.log(formData, "testing1")
 
       const response = await axios.post(
         `${API}/create/notice`,
@@ -58,7 +58,7 @@ export const NoticeState = ({ children }) => {
           },
         }
       )
-      console.log(response,"response")
+      console.log(response, "response")
       if (response) {
         dispatch({
           type: NOTICE_CREATE,

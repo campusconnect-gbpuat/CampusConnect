@@ -1,42 +1,71 @@
 import {
-  Button,
   Card,
   CardActions,
+  Button,
   CardContent,
   Grid,
   Typography,
 } from "@material-ui/core"
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { NoticeContext } from "../../../../context/noticeContext/NoticeContext"
+import { AuthContext } from "../../../../context/authContext/authContext"
 import { Home } from "../../../common/Base/Home"
+import CameraIcon from "@material-ui/icons/Camera"
+import { LoadingNotice } from "./LoadingNotice"
+import { NoticeModal } from "../../Modals/NoticeModal"
 
 export const Notice = () => {
   const noticeContext = useContext(NoticeContext)
+  const authContext = useContext(AuthContext)
+  const [showNoticeModal, setShowNoticeModal] = useState(false)
+
   useEffect(() => {
     noticeContext.getNotices()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log(noticeContext.notice);
+  const handleModalNotice = () => {
+    setShowNoticeModal(!showNoticeModal)
+  }
+
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#121212", color: "whitesmoke" }
+      : { background: "white", color: "black" }
+
+  const clickStyleTheme =
+    authContext.theme === "dark"
+      ? { color: "#03DAC6", borderColor: "#03DAC6" }
+      : { color: "blue", borderColor: "blue" }
+
   return (
     <Home>
       <div>
         {noticeContext.loading ? (
-          <div>loading</div>
+          <LoadingNotice />
         ) : (
           Array.isArray(noticeContext.notice) && noticeContext.notice.length ? (
-            noticeContext.notice.map((not, index) => {
+            noticeContext.notice.slice().reverse().map((not, index) => {
               return (
-                <Card elevation={1} className="mb-3">
+                <Card elevation={1} className="mb-3" style={styleTheme}>
+                  {showNoticeModal && (
+                    <NoticeModal
+                      show={showNoticeModal}
+                      handleModal={handleModalNotice}
+                      noticeFunction={noticeContext.updateNotice}
+                      modalTitle="Update Notice"
+                      notice={not}
+                    />
+                  )}
                   <CardContent>
                     <Grid
                       container
                       justifyContent="space-between"
                       alignItems="flex-start"
                     >
-                      <Grid item>
-                        <Typography color="textSecondary" variant="caption">
-                          Notice no.{index + 100}
+                      <Grid item className="mb-2">
+                        <Typography color="textSecondary" variant="caption" style={styleTheme}>
+                          Notice no.{noticeContext.notice.length - index}
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -45,26 +74,90 @@ export const Notice = () => {
                         </Typography>
                       </Grid>
                     </Grid>
-                    <Typography color="primary">{not.title}</Typography>
-                    <Typography variant="body1">{not.description}</Typography>
+                    <Typography style={clickStyleTheme} className="mb-2">{not.title}</Typography>
+                    <Typography variant="body1" className="mb-2">{not.description}</Typography>
                   </CardContent>
-                  <CardActions className="pt-0 px-3">
-                    <Button
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      onClick={() => {
-                        window.open(`${not.link}`)
-                      }}
-                    >
-                      Link
-                    </Button>
-                  </CardActions>
+                  <Grid
+                    container
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                    direction="row"
+                    className="mb-2"
+                  >
+                    <Grid item>
+                      <CardActions className="pt-0 px-3">
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {
+                            window.open(`${not.link}`)
+                          }}
+                          style={clickStyleTheme}
+                        >
+                          Link
+                        </Button>
+                      </CardActions>
+                    </Grid>
+                    <Grid item>
+                      <Grid container direction="row">
+                        <Grid item>
+                          {authContext.user.role === 2 && (
+                            <CardActions className="pt-0 px-0">
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                onClick={() => {
+                                  handleModalNotice();
+                                }}
+                                style={clickStyleTheme}
+                              >
+                                Edit
+                              </Button>
+                            </CardActions>
+                          )}
+                        </Grid>
+                        <Grid item>
+                          {authContext.user.role === 2 && (
+                            <CardActions className="pt-0 px-3">
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                onClick={() => {
+                                  noticeContext.deleteNotice(authContext.user._id, not._id);
+                                }}
+                                style={clickStyleTheme}
+                              >
+                                Delete
+                              </Button>
+                            </CardActions>
+                          )}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Card>
               )
             })
           ) : (
-            <div>No notices available</div>
+            <div
+              className="m-auto"
+              style={{
+                height: "30vh",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Grid
+                container
+                spacing={3}
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <CameraIcon fontSize="large" />
+                <h6 className="mt-2">No notice out there</h6>
+              </Grid>
+            </div>
           )
         )}
       </div>

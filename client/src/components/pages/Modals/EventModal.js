@@ -4,33 +4,24 @@ import React, { useContext, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import { Modal } from "react-bootstrap"
 
-export const NoticeModal = ({
+export const EventModal = ({
     show,
     handleModal,
-    noticeFunction,
+    eventFunction,
     modalTitle,
-    notice,
+    event,
 }) => {
     const authContext = useContext(AuthContext)
-    const [description, setDescription] = useState(notice === undefined ? "" : notice.description)
-    const [title, setTitle] = useState(notice === undefined ? "" : notice.title)
-    const [link, setLink] = useState(notice === undefined ? "" : notice.link)
+    const [description, setDescription] = useState(event === undefined ? "" : event.description)
+    const [title, setTitle] = useState(event === undefined ? "" : event.title)
+    const [date, setDate] = useState(event === undefined ? "" : event.date)
+    const [venue, setVenue] = useState(event === undefined ? "" : event.venue)
 
     const handleForm = async (e) => {
         e.preventDefault()
-        const formData = new FormData()
-        // console.log(formData);
-        // console.log(title);
-        // console.log(description);
-        // console.log(link);
-        // formData.append("user", authContext.user._id);
-        // formData.append("title", title);
-        // formData.append("description", description);
-        // formData.append("link", link);
-        // console.log(formData);
-        notice
-            ? noticeFunction({ description, title, link }, authContext.user._id, notice._id)
-            : noticeFunction({ description, title, link }, authContext.user._id)
+        event
+            ? eventFunction({ description, title, date, venue }, authContext.user._id, event._id)
+            : eventFunction({ description, title, date, venue }, authContext.user._id)
         handleModal()
     }
     const styleTheme =
@@ -96,7 +87,7 @@ export const NoticeModal = ({
                                     fullWidth
                                     multiline
                                     variant="outlined"
-                                    placeholder="Write a caption..."
+                                    placeholder="Describe the event..."
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                     className={classes.textField}
@@ -104,11 +95,20 @@ export const NoticeModal = ({
                                 <TextField
                                     className={`mt-3 ${classes.textField}`}
                                     variant="outlined"
-                                    placeholder="Link"
+                                    placeholder="Date"
                                     size="small"
-                                    value={link}
+                                    value={date}
                                     fullWidth
-                                    onChange={(e) => setLink(e.target.value)}
+                                    onChange={(e) => setDate(e.target.value)}
+                                />
+                                <TextField
+                                    className={`mt-3 ${classes.textField}`}
+                                    variant="outlined"
+                                    placeholder="Venue"
+                                    size="small"
+                                    value={venue}
+                                    fullWidth
+                                    onChange={(e) => setVenue(e.target.value)}
                                 />
                             </Grid>
                         </Grid>

@@ -20,7 +20,7 @@ export const EventCard = () => {
     return (
         <div className="mt-3">
             <h6>
-                <b>Updates</b>
+                <b>Site Updates</b>
             </h6>
             <Paper variant="elevation" elevation={3} style={styleTheme}>
                 <Carousel style={{ height: "150px", margin: "auto" }}>

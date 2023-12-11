@@ -22,11 +22,10 @@ router.param("eventId", getEventById);
 
 // create event
 router.post(
-	"/create/event/:userId",
+	"/create/event",
 	isSignedIn,
 	isAuthenticated,
 	isAdmin,
-	upload.single("picture"),
 	createEvent
 );
 

@@ -57,12 +57,8 @@ exports.upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // Create an Event
 exports.createEvent = (req, res) => {
-	const { title, description, date, venue, link } = req.body;
-	var picture;
-	if (req.file) {
-		picture = req.file.path;
-	}
-	const newEvent = Event({ title, description, date, venue, link, picture });
+	const { title, description, date, venue } = req.body;
+	const newEvent = Event({ title, description, date, venue });
 	newEvent.save((err, event) => {
 		if (err) {
 			res.status(400).json({
@@ -95,27 +91,8 @@ exports.getEvent = (req, res) => {
 
 // update event
 exports.updateEvent = (req, res) => {
-	Event.findById({ _id: req.event._id }).exec((err, event) => {
-		if (event.picture) {
-			let path = event.picture;
-			fs.readdir(path, (err, files) => {
-				if (path) {
-					fs.unlink(path, (err) => {
-						if (err) {
-							console.error(err);
-							return;
-						}
-					});
-				}
-			});
-		}
-	});
-	const { title, description, date, venue, link } = req.body;
-	var picture;
-	if (req.file) {
-		picture = req.file.path;
-	}
-	const updateObj = { title, description, date, venue, link, picture };
+	const { title, description, date, venue } = req.body;
+	const updateObj = { title, description, date, venue };
 
 	Event.findByIdAndUpdate(
 		{ _id: req.event._id },
@@ -134,21 +111,6 @@ exports.updateEvent = (req, res) => {
 
 // delete event
 exports.deleteEvent = (req, res) => {
-	Event.findById({ _id: req.event._id }).exec((err, event) => {
-		if (event.picture) {
-			let path = event.picture;
-			fs.readdir(path, (err, files) => {
-				if (path) {
-					fs.unlink(path, (err) => {
-						if (err) {
-							console.error(err);
-							return;
-						}
-					});
-				}
-			});
-		}
-	});
 	Event.findByIdAndRemove(
 		{ _id: req.event._id },
 		{ useFindAndModify: false, new: true },

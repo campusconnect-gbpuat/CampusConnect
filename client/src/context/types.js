@@ -42,9 +42,11 @@ export const NOTICE_CREATE = "notice_create"
 export const NOTICE_SUCCESS = "notice_success"
 
 //Events
-export const EVENT_LOADING = "notice_loading"
-export const EVENT_ERROR = "notice_error"
-export const EVENT_GET = "notice_get"
+export const EVENT_LOADING = "event_loading"
+export const EVENT_ERROR = "event_error"
+export const EVENT_GET = "event_get"
+export const EVENT_CREATE = "event_create"
+export const EVENT_SUCCESS = "event_success"
 
 //POLL
 export const POLL_LOADING = "poll_loading"

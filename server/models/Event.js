@@ -14,16 +14,9 @@ const eventSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		picture: {
-			type: String,
-			default: null,
-		},
 		venue: {
 			type: String,
 			required: true,
-		},
-		link: {
-			type: mongoose.SchemaTypes.Url,
 		},
 	},
 	{ timestamps: true }
