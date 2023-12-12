@@ -12,7 +12,7 @@ import { Signup } from "../Login/Signup"
 import { Post } from "../pages/Home/Post/Post"
 import { Blog } from "../pages/Home/Blog/Blog"
 import { Profile } from "../pages/Profile/Profile"
-import { JobsAndPlacements } from "../pages/Home/JobsAndPlacements/JobsAndPlacements"
+import { Jobs } from "../pages/Home/Jobs/Jobs"
 import { Ads } from "../pages/Home/Ads/Ads"
 import { PostContext } from "../../context/postContext/postContext"
 import { BlogContext } from "../../context/blogContext/BlogContext"
@@ -183,7 +183,7 @@ export const Routing = () => {
             <Route path="/chat" element={<PrivateRoute component={Chat} />} />
             <Route path="/posts" element={<PrivateRoute component={Post} />} />
             <Route path="/bookmarks" element={<PrivateRoute component={Bookmarks} />} />
-            <Route path="/jobs-and-placements" element={<PrivateRoute component={JobsAndPlacements} />} />
+            <Route path="/jobs-and-placements" element={<PrivateRoute component={Jobs} />} />
             <Route path="/ads" element={<PrivateRoute component={Ads} />} />
             <Route path="/blogs" element={<PrivateRoute component={Blog} />} />
             <Route path="/profile/:userId" element={<PrivateRoute component={Profile} />} />

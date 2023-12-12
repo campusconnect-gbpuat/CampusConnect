@@ -48,6 +48,20 @@ export const EVENT_GET = "event_get"
 export const EVENT_CREATE = "event_create"
 export const EVENT_SUCCESS = "event_success"
 
+//Jobs
+export const JOB_LOADING = "job_loading"
+export const JOB_ERROR = "job_error"
+export const JOB_GET = "job_get"
+export const JOB_CREATE = "job_create"
+export const JOB_SUCCESS = "job_success"
+
+//Update
+export const UPDATE_LOADING = "update_loading"
+export const UPDATE_ERROR = "update_error"
+export const UPDATE_GET = "update_get"
+export const UPDATE_CREATE = "update_create"
+export const UPDATE_SUCCESS = "update_success"
+
 //POLL
 export const POLL_LOADING = "poll_loading"
 export const POLL_GET_ALL = "poll_get_all"

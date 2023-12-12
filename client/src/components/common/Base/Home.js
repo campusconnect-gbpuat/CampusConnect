@@ -12,6 +12,7 @@ import HeaderMobile from "../Header/HeaderMobile"
 import "./Home.css"
 import { NoticeCard } from "../../pages/Home/Notice/NoticeCard"
 import { PollCard } from "../../pages/Home/Poll/PollCard"
+import { UpdateCard } from "../../pages/Home/Update/UpdateCard"
 
 export const Home = ({ children }) => {
   const userContext = useContext(UserContext)
@@ -34,7 +35,7 @@ export const Home = ({ children }) => {
             <div id="home-center-wrapper">
               <InputBox />
               <PollCard />
-              <NoticeCard />
+              <UpdateCard />
               {children}
             </div>
           </Grid>

@@ -18,14 +18,16 @@ export const Events = () => {
     const eventContext = useContext(EventContext)
     const authContext = useContext(AuthContext)
     const [showEventModal, setShowEventModal] = useState(false)
+    const [eventModalObj,setEventModalObj]= useState()
 
     useEffect(() => {
         eventContext.getEvents()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const handleModalEvent = () => {
+    const handleModalEvent = (eve) => {
         setShowEventModal(!showEventModal)
+        setEventModalObj(eve)
     }
 
     const styleTheme =
@@ -48,15 +50,7 @@ export const Events = () => {
                         eventContext.event.map((eve, index) => {
                             return (
                                 <Card elevation={1} className="mb-3" style={styleTheme}>
-                                    {showEventModal && (
-                                        <EventModal
-                                            show={showEventModal}
-                                            handleModal={handleModalEvent}
-                                            eventFunction={eventContext.updateEvent}
-                                            modalTitle="Update Event"
-                                            event={eve}
-                                        />
-                                    )}
+
                                     <CardContent>
                                         <Grid>
                                             <Grid item>
@@ -99,7 +93,7 @@ export const Events = () => {
                                                                         size="small"
                                                                         variant="outlined"
                                                                         onClick={() => {
-                                                                            handleModalEvent();
+                                                                            handleModalEvent(eve);
                                                                         }}
                                                                         style={clickStyleTheme}
                                                                     >
@@ -153,6 +147,15 @@ export const Events = () => {
                             </Grid>
                         </div>
                     )
+                )}
+                {showEventModal && eventModalObj && (
+                    <EventModal
+                        show={showEventModal}
+                        handleModal={handleModalEvent}
+                        eventFunction={eventContext.updateEvent}
+                        modalTitle="Update Event"
+                        event={eventModalObj}
+                    />
                 )}
             </div>
         </Home>

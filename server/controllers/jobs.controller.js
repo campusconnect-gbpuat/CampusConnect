@@ -20,15 +20,9 @@ exports.getJobById = (req, res, next, Id) => {
 
 // Create job
 exports.createJob = (req, res) => {
-  const { user, work, company, abtWork, date } = req.body;
+  const { workTitle, company, eligibility, skillsReq, workLocation, salary, applyBy, link } = req.body;
 
-  const newJob = Job({
-    user,
-    work,
-    company,
-    abtWork,
-    date,
-  });
+  const newJob = Job({ workTitle, company, eligibility, skillsReq, workLocation, salary, applyBy, link });
 
   newJob.save((err, job) => {
     if (err) {

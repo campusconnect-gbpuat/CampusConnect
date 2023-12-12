@@ -100,7 +100,7 @@ export const Bookmarks = () => {
                     Ads
                   </Button>
                 </Grid>
-                <Grid>
+                {/* <Grid>
                   <Button
                     color={typeOf === "job" ? "primary" : "default"}
                     onClick={() => handleBtnClick("job")}
@@ -111,7 +111,7 @@ export const Bookmarks = () => {
                   >
                     Jobs
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Divider
                 className="mt-1 mb-3"

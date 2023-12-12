@@ -139,9 +139,16 @@ export const PollCard = () => {
                         </Grid>
 
                         <Grid item>
-                          <IconButton size="small" style={styleTheme}>
-                            <MoreHorizIcon />
-                          </IconButton>
+                          <Button
+                            variant="text"
+                            size="small"
+                            style={styleTheme}
+                            onClick={(e) =>
+                              console.log("delete clicked")
+                            }
+                          >
+                            Delete
+                          </Button>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -251,7 +258,8 @@ export const PollCard = () => {
             </Carousel>
           </Card>
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
   )
 }

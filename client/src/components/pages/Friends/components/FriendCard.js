@@ -26,6 +26,12 @@ export const FriendCard = ({ friend, type }) => {
   useEffect(() => {
     setLoading(userContext.loading)
   }, [userContext.loading])
+  
+  const clickStyleTheme =
+        authContext.theme === "dark"
+            ? { color: "#03DAC6", borderColor: "#03DAC6" }
+            : { color: "blue", borderColor: "blue" }
+
   return (
     <List>
       <ListItem>
@@ -81,6 +87,7 @@ export const FriendCard = ({ friend, type }) => {
           <>
             <Button
               onClick={(e) => handleClickBtn(e, userContext.sendFriendRequest)}
+              style={clickStyleTheme}
             >
               {loading ? <ButtonLoading /> : "Add friend"}
               {/* Add friend */}

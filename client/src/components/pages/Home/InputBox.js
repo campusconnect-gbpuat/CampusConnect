@@ -17,6 +17,8 @@ import { PollContext } from "../../../context/pollContext/PollContext"
 import { AdsContext } from "../../../context/adsContext/AdsContext"
 import { NoticeContext } from "../../../context/noticeContext/NoticeContext"
 import { EventContext } from "../../../context/eventContext/EventContext"
+import { JobContext } from "../../../context/jobContext/JobContext"
+import { JobModal } from "../Modals/JobModal"
 import { AdsModal } from "../Modals/AdsModal"
 
 export const InputBox = () => {
@@ -27,12 +29,15 @@ export const InputBox = () => {
   const adsContext = useContext(AdsContext)
   const noticeContext = useContext(NoticeContext)
   const eventContext = useContext(EventContext)
+  const jobContext = useContext(JobContext)
   const [showPost, setShowPost] = useState(false)
   const [showBlog, setShowBlog] = useState(false)
   const [showPoll, setShowPoll] = useState(false)
   const [showAds, setShowAds] = useState(false)
   const [showNotices, setShowNotices] = useState(false)
   const [showEvents, setShowEvents] = useState(false)
+  const [showJobs, setShowJobs] = useState(false)
+
   const handleModalPoll = () => {
     setShowPoll(!showPoll)
   }
@@ -41,6 +46,9 @@ export const InputBox = () => {
   }
   const handleEvents = () => {
     setShowEvents(!showEvents)
+  }
+  const handleModalJob = () => {
+    setShowJobs(!showJobs)
   }
   const handleModalPost = () => {
     // console.log(showPost)
@@ -116,6 +124,15 @@ export const InputBox = () => {
           handleModal={handleEvents}
         />
       )}
+      {showJobs && (
+        <JobModal
+          modalTitle="Create Job"
+          show={showJobs}
+          jobFunction={jobContext.createJob}
+          job={undefined}
+          handleModal={handleModalJob}
+        />
+      )}
       <Paper elevation={3} variant="elevation" className="p-3 mb-3" style={styleTheme}>
         <Grid
           container
@@ -173,7 +190,7 @@ export const InputBox = () => {
           </Grid>
           {authContext.user.role === 2 && (
             <Grid item>
-              <Button onClick={handleModalAds} startIcon={<FontAwesomeIcon icon={faGraduationCap} />} style={styleTheme}>
+              <Button onClick={handleModalJob} startIcon={<FontAwesomeIcon icon={faGraduationCap} />} style={styleTheme}>
                 Add Job
               </Button>
             </Grid>

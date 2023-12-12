@@ -28,6 +28,7 @@ app.use("/api/v1", require("./routes/ad.route"))
 app.use("/api/v1", require("./routes/notice.route"))
 app.use("/api/v1", require("./routes/poll.route"))
 app.use("/api/v1", require("./routes/event.route"))
+app.use("/api/v1", require("./routes/update.route"))
 app.use("/api/v1", require("./routes/feedback.route"))
 app.get("/", (req, res) => {
   res.send("this is the home")

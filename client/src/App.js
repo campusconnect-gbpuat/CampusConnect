@@ -6,9 +6,11 @@ import { AuthState } from "./context/authContext/AuthState"
 import { BlogState } from "./context/blogContext/BlogState"
 import { NoticeState } from "./context/noticeContext/NoticeState"
 import { EventState } from "./context/eventContext/EventState"
+import { UpdateState } from "./context/updateContext/UpdateState"
 import { PollState } from "./context/pollContext/PollState"
 import { PostState } from "./context/postContext/PostState"
 import { UserState } from "./context/userContext/UserState"
+import { JobState } from "./context/jobContext/JobState"
 
 export const App = () => {
   return (
@@ -19,9 +21,13 @@ export const App = () => {
             <BlogState>
               <AdsState>
                 <EventState>
-                  <NoticeState>
-                    <Routing />
-                  </NoticeState>
+                  <JobState>
+                    <UpdateState>
+                      <NoticeState>
+                        <Routing />
+                      </NoticeState>
+                    </UpdateState>
+                  </JobState>
                 </EventState>
               </AdsState>
             </BlogState>

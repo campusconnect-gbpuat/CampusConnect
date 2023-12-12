@@ -18,6 +18,14 @@
   margin-bottom: 25px;
 }
 
+.job-modal .modal-content {
+  top: 30px;
+}
+
+.job-card .MuiCardContent-root {
+  padding-bottom: 16px !important;
+}
+
 .poll-card {
   margin-bottom: 25px;
 }
@@ -81,6 +89,10 @@
   .friends-tab,
   .bookmark-wrapper {
     padding: 0 15px;
+  }
+
+  .job-modal .modal-content {
+    top: 80px;
   }
 
   .header .MuiPaper-elevation3 {

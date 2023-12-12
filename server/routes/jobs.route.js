@@ -19,7 +19,7 @@ router.param("userId", getUserById);
 router.param("jobId", getJobById);
 
 // create job
-router.post("/create/job/:userId", isSignedIn, isAuthenticated, createJob);
+router.post("/create/job", isSignedIn, isAuthenticated, createJob);
 
 // read all jobs
 router.get("/jobs", isSignedIn, allJobs);

@@ -1,85 +1,49 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+require("mongoose-type-url");
 
 const JobSchema = new mongoose.Schema(
   {
-    objType: {
+    workTitle: {
       type: String,
-      default: "jobs",
-    },
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
       required: true,
-    },
-
-    work: {
-      workTitle: {
-        type: String,
-        required: true,
-        trim: true,
-        max: 50,
-      },
-
-      workType: {
-        type: String,
-        required: true,
-      },
-
-      workLocation: {
-        type: String,
-        required: true,
-      },
-
-      workDuration: {
-        type: String,
-      },
-
-      openings: {
-        type: Number,
-      },
-
-      salary: {
-        type: String,
-      },
+      trim: true,
+      max: 50,
     },
 
     company: {
-      companyName: {
-        type: String,
-        required: true,
-      },
-      abtCompany: {
-        type: String,
-        max: 3000,
-        required: true,
-      },
+      type: String,
+      required: true
     },
 
-    abtWork: {
-      workDesc: {
-        type: String,
-        max: 3000,
-        required: true,
-      },
-
-      skillsReq: [
-        {
-          type: String,
-          required: true,
-        },
-      ],
+    eligibility: {
+      type: String,
+      required: true
     },
 
-    date: {
-      startDate: {
+    skillsReq: [
+      {
         type: String,
         required: true,
       },
+    ],
 
-      applyBy: {
-        type: String,
-        required: true,
-      },
+    workLocation: {
+      type: String,
+      required: true,
+    },
+
+    salary: {
+      type: String,
+    },
+
+    applyBy: {
+      type: String,
+      required: true,
+    },
+
+    link: {
+      type: mongoose.SchemaTypes.Url,
+      required: true,
     },
   },
   { timestamps: true }

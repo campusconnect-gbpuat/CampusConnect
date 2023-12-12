@@ -18,14 +18,15 @@ export const Notice = () => {
   const noticeContext = useContext(NoticeContext)
   const authContext = useContext(AuthContext)
   const [showNoticeModal, setShowNoticeModal] = useState(false)
-
+  const [noticeModalObj, setNoticeModalObj] = useState()
   useEffect(() => {
     noticeContext.getNotices()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleModalNotice = () => {
+  const handleModalNotice = (notice) => {
     setShowNoticeModal(!showNoticeModal)
+    setNoticeModalObj(notice)
   }
 
   const styleTheme =
@@ -48,15 +49,7 @@ export const Notice = () => {
             noticeContext.notice.slice().reverse().map((not, index) => {
               return (
                 <Card elevation={1} className="mb-3" style={styleTheme}>
-                  {showNoticeModal && (
-                    <NoticeModal
-                      show={showNoticeModal}
-                      handleModal={handleModalNotice}
-                      noticeFunction={noticeContext.updateNotice}
-                      modalTitle="Update Notice"
-                      notice={not}
-                    />
-                  )}
+
                   <CardContent>
                     <Grid
                       container
@@ -107,7 +100,7 @@ export const Notice = () => {
                                 size="small"
                                 variant="outlined"
                                 onClick={() => {
-                                  handleModalNotice();
+                                  handleModalNotice(not);
                                 }}
                                 style={clickStyleTheme}
                               >
@@ -159,6 +152,15 @@ export const Notice = () => {
               </Grid>
             </div>
           )
+        )}
+        {showNoticeModal && noticeModalObj&& (
+          <NoticeModal
+            show={showNoticeModal}
+            handleModal={handleModalNotice}
+            noticeFunction={noticeContext.updateNotice}
+            modalTitle="Update Notice"
+            notice={noticeModalObj}
+          />
         )}
       </div>
     </Home>

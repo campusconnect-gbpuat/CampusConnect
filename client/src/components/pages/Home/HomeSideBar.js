@@ -17,7 +17,6 @@ import { faStickyNote } from "@fortawesome/free-solid-svg-icons"
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
 import { useNavigate } from "react-router-dom"
-import { NoticeCard } from "./Notice/NoticeCard"
 import { API } from "../../../utils/proxy"
 
 export const HomeSideBar = () => {
