@@ -24,7 +24,7 @@ export const NoticeCard = () => {
       <h6>
         <b>Site Updates</b>
         {authContext.user.role === 2 && (
-          <FontAwesomeIcon icon={faPlusCircle} style={{ float: 'right' }} />
+          <FontAwesomeIcon icon={faPlusCircle} style={{ float: 'right', cursor: 'pointer' }} />
         )}
       </h6>
       <Paper variant="elevation" elevation={3} style={styleTheme}>

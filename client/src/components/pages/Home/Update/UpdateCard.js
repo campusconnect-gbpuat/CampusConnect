@@ -38,7 +38,7 @@ export const UpdateCard = () => {
             <h6>
                 <b>Site Updates</b>
                 {authContext.user.role === 2 && (
-                    <FontAwesomeIcon icon={faPlusCircle} style={{ float: 'right' }} onClick={() => handleModalUpdate()} />
+                    <FontAwesomeIcon icon={faPlusCircle} style={{ float: 'right', cursor: 'pointer' }} onClick={() => handleModalUpdate()} />
                 )}
             </h6>
             <Paper variant="elevation" elevation={3} style={styleTheme}>

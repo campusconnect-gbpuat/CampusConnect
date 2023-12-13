@@ -7,14 +7,17 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
+  Link,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../../../context/userContext/UserContext"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import { ButtonLoading } from "../../../Loading_Backdrop/ButtonLoading"
 import { API } from "../../../../utils/proxy"
+import { useNavigate } from "react-router-dom"
 
 export const FriendCard = ({ friend, type }) => {
+  const navigate = useNavigate();
   const userContext = useContext(UserContext)
   const authContext = useContext(AuthContext)
   const [loading, setLoading] = useState(userContext.loading)
@@ -26,24 +29,28 @@ export const FriendCard = ({ friend, type }) => {
   useEffect(() => {
     setLoading(userContext.loading)
   }, [userContext.loading])
-  
+
   const clickStyleTheme =
-        authContext.theme === "dark"
-            ? { color: "#03DAC6", borderColor: "#03DAC6" }
-            : { color: "blue", borderColor: "blue" }
+    authContext.theme === "dark"
+      ? { color: "#03DAC6", borderColor: "#03DAC6" }
+      : { color: "blue", borderColor: "blue" }
 
   return (
     <List>
       <ListItem>
         <ListItemAvatar>
-          <IconButton>
+          <IconButton
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              navigate(`/profile/${friend._id}`)
+            }}>
             <Avatar alt={friend.name} src={`${API}/pic/user/${friend._id}`} />
           </IconButton>
         </ListItemAvatar>
         <ListItemText
           primary={
             <Typography variant="h6">
-              <b>{friend.name}</b>
+              <b style={{ cursor: 'pointer' }} onClick={() => navigate(`/profile/${friend._id}`)}>{friend.name}</b>
             </Typography>
           }
           secondary={
@@ -60,6 +67,7 @@ export const FriendCard = ({ friend, type }) => {
               onClick={(e) =>
                 handleClickBtn(e, userContext.acceptFriendRequest)
               }
+              style={clickStyleTheme}
             >
               {loading ? <ButtonLoading /> : "Accept"}
               {/* Accept */}
@@ -68,6 +76,7 @@ export const FriendCard = ({ friend, type }) => {
               onClick={(e) =>
                 handleClickBtn(e, userContext.rejectFriendRequest)
               }
+              style={clickStyleTheme}
             >
               {loading ? <ButtonLoading /> : "Delete"}
               {/* Delete */}
@@ -76,7 +85,7 @@ export const FriendCard = ({ friend, type }) => {
         )}
         {type === "friend" && (
           <>
-            <Button onClick={(e) => handleClickBtn(e, userContext.unFriend)}>
+            <Button onClick={(e) => handleClickBtn(e, userContext.unFriend)} style={{ color: "red" }}>
               {loading ? <ButtonLoading /> : "Remove friend"}
               {/* Unfriend */}
             </Button>
@@ -95,6 +104,6 @@ export const FriendCard = ({ friend, type }) => {
           </>
         )}
       </ListItem>
-    </List>
+    </List >
   )
 }

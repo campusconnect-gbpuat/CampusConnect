@@ -10,6 +10,7 @@ import {
   IconButton,
   Paper,
   Typography,
+  Link,
 } from "@material-ui/core"
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
@@ -39,6 +40,23 @@ export const Profile = () => {
   const [type, setType] = useState("post")
   const [picModal, setPicModal] = useState(false)
   const [editStatus, setEditStatus] = useState(false)
+
+  const handleClickBtn = async (e, func) => {
+    try {
+      await func(authContext.user._id, userId)
+    } catch (error) { }
+  }
+
+  function checkFriend() {
+    let isFriend = false;
+    userContext.user.friendList.map((friend, i) => {
+      if (friend._id.toString() == authContext.user._id.toString()) {
+        isFriend = true;
+      }
+    });
+    return isFriend;
+  }
+
   useEffect(() => {
     const fetchUserDetails = async (userId) => {
       try {
@@ -106,8 +124,8 @@ export const Profile = () => {
 
   const clickStyleTheme =
     authContext.theme === "dark"
-      ? { color: "#03DAC6" }
-      : { color: "blue" }
+      ? { color: "#03DAC6", borderColor: "#03DAC6" }
+      : { color: "blue", borderColor: "blue" }
 
   return (
     <div className="home" style={{ overflowY: "auto" }}>
@@ -177,9 +195,47 @@ export const Profile = () => {
                         color="textSecondary"
                         component="p"
                         style={styleTheme}
+                        className="mb-3"
                       >
                         {userContext.user.intro}
                       </Typography>
+                      <Grid container direction="row">
+                        <Grid item>
+                          {authContext.user._id != userId ? (checkFriend() ? (
+                            <>
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                onClick={(e) => handleClickBtn(e, userContext.unFriend)}
+                                style={{ color: "red", borderColor: "red" }}>
+                                Remove friend
+                              </Button>
+                            </>
+                          ) : <>
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              onClick={(e) => handleClickBtn(e, userContext.sendFriendRequest)}
+                              style={clickStyleTheme}
+                            >
+                              Add friend
+                            </Button>
+                          </>) : null}
+                        </Grid>
+                        <Grid item>
+                          {authContext.user._id != userId ? <Button
+                            size="small"
+                            variant="outlined"
+                            className="ml-3"
+                            onClick={() => {
+                              navigate("/chat")
+                            }}
+                            style={clickStyleTheme}
+                          >
+                            Chat
+                          </Button> : null}
+                        </Grid>
+                      </Grid>
                     </CardContent>
                   </Grid>
                 </Grid>
