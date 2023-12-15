@@ -5,21 +5,21 @@ import {
   Paper,
   TextField,
   Typography,
-} from "@material-ui/core"
-import React, { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../../context/authContext/authContext"
-import "./Login.css"
+} from "@material-ui/core";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext/authContext";
+import "./Login.css";
 
 export const Signup = () => {
-  const navigate = useNavigate()
-  const authContext = useContext(AuthContext)
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
   const defaultdob =
     new Date().getFullYear() +
     "-" +
     new Date().getMonth() +
     "-" +
-    new Date().getDate()
+    new Date().getDate();
 
   const [inputValues, setInputValues] = useState({
     name: "",
@@ -29,20 +29,20 @@ export const Signup = () => {
     rollno: "",
     age: "",
     collegeId: "",
-  })
+  });
 
   // console.log(inputValues)
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputValues({
       ...inputValues,
       [name]: value,
       age:
         parseInt(new Date().getFullYear()) -
         parseInt(inputValues.dob.slice(0, 4)),
-    })
-  }
+    });
+  };
 
   const formData = {
     name: inputValues.name,
@@ -51,15 +51,16 @@ export const Signup = () => {
     password: inputValues.password,
     rollno: inputValues.rollno,
     collegeId: inputValues.collegeId,
-  }
+  };
 
   const handleOnSubmit = async (e) => {
-    e.preventDefault()
-    const response = await authContext.signupUser(formData)
+    e.preventDefault();
+    const response = await authContext.signupUser(formData);
+    console.log(response, "from signup");
     if (response) {
-      navigate("/signin")
+      navigate("/signin");
     }
-  }
+  };
 
   return (
     <div className="login">
@@ -72,7 +73,12 @@ export const Signup = () => {
         >
           <Grid container justifyContent="center" alignItems="center">
             <Grid item>
-              <img src="cc_logo.png" height={"220px"} alt="logo" className="mb-3" />
+              <img
+                src="cc_logo.png"
+                height={"220px"}
+                alt="logo"
+                className="mb-3"
+              />
             </Grid>
           </Grid>
           <Grid item>
@@ -223,7 +229,7 @@ export const Signup = () => {
                     <Grid item>
                       <Button
                         onClick={() => {
-                          navigate("/signin")
+                          navigate("/signin");
                         }}
                         variant="contained"
                         style={{
@@ -242,14 +248,13 @@ export const Signup = () => {
               <Button
                 size="small"
                 onClick={() => {
-                  navigate("/signup-campus")
+                  navigate("/signup-campus");
                 }}
-              >
-              </Button>
+              ></Button>
             </Grid>
           </Grid>
         </Grid>
       </div>
     </div>
-  )
-}
+  );
+};

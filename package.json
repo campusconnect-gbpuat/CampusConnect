@@ -4,7 +4,7 @@
   "description": "A social media application for a university",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"cd client && npm start\" \"cd server && nodemon app.js\"",
+    "dev": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
     "install": "concurrently \"cd client && npm install\" \"cd server && npm install\" "
   },
   "author": "Mayank Tripathi",
