@@ -82,7 +82,7 @@ export const AuthState = ({ children }) => {
         );
         console.log(firebaseUser.user, "firenase ", response.data);
 
-        const userRef = doc(db, "users", firebaseUser.user.uid);
+        const userRef = doc(db, "users", response.data.data._id);
         await setDoc(userRef, {
           uid: firebaseUser.user.uid,
           name: signupData.name,
@@ -92,10 +92,10 @@ export const AuthState = ({ children }) => {
         });
 
         // creating a userChats collection
-        const currentUserRef = doc(db, "userChats", firebaseUser.user.uid);
+        const currentUserRef = doc(db, "userChats", response.data.data._id);
         const CurrentUserChatsDocSnap = await getDoc(currentUserRef);
         if (!CurrentUserChatsDocSnap.exists()) {
-          await setDoc(doc(db, "userChats", firebaseUser.user.uid), {});
+          await setDoc(doc(db, "userChats", response.data.data._id), {});
         }
         // add the user in the firebase document
       }

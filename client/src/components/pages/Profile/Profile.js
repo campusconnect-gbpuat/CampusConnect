@@ -1,5 +1,5 @@
-import { faBoxOpen } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
   Button,
@@ -11,41 +11,52 @@ import {
   Paper,
   Typography,
   Link,
-} from "@material-ui/core"
-import React, { useContext, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { AuthContext } from "../../../context/authContext/authContext"
-import { BlogContext } from "../../../context/blogContext/BlogContext"
-import { PostContext } from "../../../context/postContext/postContext"
-import { UserContext } from "../../../context/userContext/UserContext"
-import Header from "../../common/Header/Header"
-import { InputBox } from "../Home/InputBox"
-import { EditProfileModal } from "../Modals/EditProfileModal"
-import { HomeTab } from "./components/HomeTab"
-import { Loading } from "../../Loading_Backdrop/Loading"
-import { API } from "../../../utils/proxy"
-import { ProfilePictureModal } from "../Modals/ProfilePictureModal"
-import HeaderMobile from "../../common/Header/HeaderMobile"
+} from "@material-ui/core";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../../context/authContext/authContext";
+import { BlogContext } from "../../../context/blogContext/BlogContext";
+import { PostContext } from "../../../context/postContext/postContext";
+import { UserContext } from "../../../context/userContext/UserContext";
+import Header from "../../common/Header/Header";
+import { InputBox } from "../Home/InputBox";
+import { EditProfileModal } from "../Modals/EditProfileModal";
+import { HomeTab } from "./components/HomeTab";
+import { Loading } from "../../Loading_Backdrop/Loading";
+import { API } from "../../../utils/proxy";
+import { ProfilePictureModal } from "../Modals/ProfilePictureModal";
+import HeaderMobile from "../../common/Header/HeaderMobile";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../utils/config/firebase";
+import { ChatContext } from "../../../context/chatContext/chatContext";
 
 export const Profile = () => {
   const { userId } = useParams();
-  const navigate = useNavigate()
-  const postContext = useContext(PostContext)
-  const blogContext = useContext(BlogContext)
-  const userContext = useContext(UserContext)
-  const authContext = useContext(AuthContext)
-  const [data, setData] = useState(null)
-  const [dataPost, setDataPost] = useState([])
-  const [dataBlog, setDataBlog] = useState([])
-  const [type, setType] = useState("post")
-  const [picModal, setPicModal] = useState(false)
-  const [editStatus, setEditStatus] = useState(false)
+  const navigate = useNavigate();
+  const postContext = useContext(PostContext);
+  const blogContext = useContext(BlogContext);
+  const userContext = useContext(UserContext);
+  const authContext = useContext(AuthContext);
+  const [data, setData] = useState(null);
+  const [dataPost, setDataPost] = useState([]);
+  const [dataBlog, setDataBlog] = useState([]);
+  const [type, setType] = useState("post");
+  const [picModal, setPicModal] = useState(false);
+  const [editStatus, setEditStatus] = useState(false);
+  // chatContext State
+  const { setChatId } = useContext(ChatContext);
 
   const handleClickBtn = async (e, func) => {
     try {
-      await func(authContext.user._id, userId)
-    } catch (error) { }
-  }
+      await func(authContext.user._id, userId);
+    } catch (error) {}
+  };
 
   function checkFriend() {
     let isFriend = false;
@@ -60,78 +71,132 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUserDetails = async (userId) => {
       try {
-        await userContext.getUserById(userId)
-      } catch (error) { }
-    }
-    fetchUserDetails(userId)
+        await userContext.getUserById(userId);
+      } catch (error) {}
+    };
+    fetchUserDetails(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId])
+  }, [userId]);
 
   useEffect(() => {
     async function fetchPostsByUser() {
-      const abc = await postContext.getAllPostByUserId(userId)
-      setDataPost(abc)
-      setData(abc)
+      const abc = await postContext.getAllPostByUserId(userId);
+      setDataPost(abc);
+      setData(abc);
     }
     async function fetchBlogsByUser() {
-      const abc = await blogContext.getAllBlogsByUserId(userId)
-      setDataBlog(abc)
+      const abc = await blogContext.getAllBlogsByUserId(userId);
+      setDataBlog(abc);
     }
     if (userContext.user) {
-      fetchPostsByUser()
-      fetchBlogsByUser()
+      fetchPostsByUser();
+      fetchBlogsByUser();
     }
     // setData(abc.data)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId])
+  }, [userId]);
 
   const handleClick = async (typeOf) => {
     if (typeOf === "post") {
-      setData(dataPost)
-      setType(typeOf)
+      setData(dataPost);
+      setType(typeOf);
     }
     if (typeOf === "blog") {
-      setData(dataBlog)
-      setType(typeOf)
+      setData(dataBlog);
+      setType(typeOf);
     }
     if (typeOf === "ads") {
       // setData(dataAd)
-      setType(typeOf)
+      setType(typeOf);
     }
     if (typeOf === "bookmark") {
-      navigate(`/bookmarks`)
+      navigate(`/bookmarks`);
     }
     // setData(response)
-  }
-  if (
-    userContext.user === null ||
-    userContext.user._id !== userId
-  ) {
-    return <Loading />
+  };
+  // Chat handler
+  const handleChat = async (userId) => {
+    const combineId =
+      authContext.user._id > userId
+        ? authContext.user._id + userId
+        : userId + authContext.user._id;
+
+    try {
+      const response = await getDoc(doc(db, "chats", combineId));
+      if (!response.exists()) {
+        await setDoc(doc(db, "chats", combineId), { messages: [] });
+        const chatDocRef = doc(db, "userChats", authContext.user._id);
+        // const chatDocSnapshot = await getDoc(chatDocRef);
+        // const existingData = chatDocSnapshot.data();
+        // console.log(existingData);
+        // const UserChats = Object.entries(existingData);
+        // console.log(existingData, UserChats, "sdfsdf");
+        await updateDoc(chatDocRef, {
+          [combineId + ".chatId"]: combineId,
+          [combineId + ".talkingWith"]: {
+            userId: userId,
+            name: userContext.user?.name,
+            imageUrl: "https://i.pravatar.cc/200",
+          },
+          [combineId + ".date"]: serverTimestamp(),
+        });
+
+        const chatDocSecondRef = doc(db, "userChats", userId);
+        await updateDoc(chatDocSecondRef, {
+          [combineId + ".chatId"]: combineId,
+          [combineId + ".talkingWith"]: {
+            userId: authContext.user._id,
+            name: authContext.user?.name,
+            imageUrl: "https://i.pravatar.cc/200",
+          },
+          [combineId + ".date"]: serverTimestamp(),
+        });
+
+        localStorage.setItem("chatId", combineId);
+        setChatId(combineId);
+        navigate(`/chats`);
+      } else {
+        localStorage.setItem("chatId", combineId);
+        setChatId(combineId);
+        navigate(`/chats`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (userContext.user === null || userContext.user._id !== userId) {
+    return <Loading />;
   }
   const handleEditBtn = () => {
-    setEditStatus(!editStatus)
-  }
+    setEditStatus(!editStatus);
+  };
 
   const handlePicAvatar = () => {
-    setPicModal(!picModal)
-  }
+    setPicModal(!picModal);
+  };
 
   const styleTheme =
     authContext.theme === "dark"
       ? { background: "#121212", color: "whitesmoke" }
-      : { background: "white", color: "black" }
+      : { background: "white", color: "black" };
 
   const clickStyleTheme =
     authContext.theme === "dark"
       ? { color: "#03DAC6", borderColor: "#03DAC6" }
-      : { color: "blue", borderColor: "blue" }
+      : { color: "blue", borderColor: "blue" };
 
   return (
     <div className="home" style={{ overflowY: "auto" }}>
       <HeaderMobile />
       <Header />
-      {<EditProfileModal show={editStatus} onHide={handleEditBtn} style={styleTheme} />}
+      {
+        <EditProfileModal
+          show={editStatus}
+          onHide={handleEditBtn}
+          style={styleTheme}
+        />
+      }
       {
         <ProfilePictureModal
           show={picModal}
@@ -201,39 +266,51 @@ export const Profile = () => {
                       </Typography>
                       <Grid container direction="row">
                         <Grid item>
-                          {authContext.user._id != userId ? (checkFriend() ? (
-                            <>
-                              <Button
-                                size="small"
-                                variant="outlined"
-                                onClick={(e) => handleClickBtn(e, userContext.unFriend)}
-                                style={{ color: "red", borderColor: "red" }}>
-                                Remove friend
-                              </Button>
-                            </>
-                          ) : <>
+                          {authContext.user._id != userId ? (
+                            checkFriend() ? (
+                              <>
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={(e) =>
+                                    handleClickBtn(e, userContext.unFriend)
+                                  }
+                                  style={{ color: "red", borderColor: "red" }}
+                                >
+                                  Remove friend
+                                </Button>
+                              </>
+                            ) : (
+                              <>
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={(e) =>
+                                    handleClickBtn(
+                                      e,
+                                      userContext.sendFriendRequest
+                                    )
+                                  }
+                                  style={clickStyleTheme}
+                                >
+                                  Add friend
+                                </Button>
+                              </>
+                            )
+                          ) : null}
+                        </Grid>
+                        <Grid item>
+                          {authContext.user._id != userId ? (
                             <Button
                               size="small"
                               variant="outlined"
-                              onClick={(e) => handleClickBtn(e, userContext.sendFriendRequest)}
+                              className="ml-3"
+                              onClick={() => handleChat(userId)}
                               style={clickStyleTheme}
                             >
-                              Add friend
+                              Chat
                             </Button>
-                          </>) : null}
-                        </Grid>
-                        <Grid item>
-                          {authContext.user._id != userId ? <Button
-                            size="small"
-                            variant="outlined"
-                            className="ml-3"
-                            onClick={() => {
-                              navigate("/chat")
-                            }}
-                            style={clickStyleTheme}
-                          >
-                            Chat
-                          </Button> : null}
+                          ) : null}
                         </Grid>
                       </Grid>
                     </CardContent>
@@ -266,7 +343,7 @@ export const Profile = () => {
                         justifyContent="space-between"
                         alignItems="center"
                       >
-                        <Grid item >
+                        <Grid item>
                           {userContext.user.role === 0 && (
                             <Typography
                               variant="button"
@@ -313,7 +390,11 @@ export const Profile = () => {
                       </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
-                      <Grid container justifyContent="flex-end" alignItems="center">
+                      <Grid
+                        container
+                        justifyContent="flex-end"
+                        alignItems="center"
+                      >
                         {userContext.user._id === authContext.user._id ? (
                           <Button
                             onClick={handleEditBtn}
@@ -356,11 +437,14 @@ export const Profile = () => {
                           fullWidth
                           style={{
                             ...styleTheme,
-                            color: type === "post" ? clickStyleTheme.color : styleTheme.color
+                            color:
+                              type === "post"
+                                ? clickStyleTheme.color
+                                : styleTheme.color,
                           }}
                           onClick={() => {
-                            setData(null)
-                            handleClick("post")
+                            setData(null);
+                            handleClick("post");
                           }}
                         >
                           Posts
@@ -372,11 +456,14 @@ export const Profile = () => {
                           fullWidth
                           style={{
                             ...styleTheme,
-                            color: type === "blog" ? clickStyleTheme.color : styleTheme.color
+                            color:
+                              type === "blog"
+                                ? clickStyleTheme.color
+                                : styleTheme.color,
                           }}
                           onClick={() => {
-                            setData(null)
-                            handleClick("blog")
+                            setData(null);
+                            handleClick("blog");
                           }}
                         >
                           Blogs
@@ -388,11 +475,14 @@ export const Profile = () => {
                           fullWidth
                           style={{
                             ...styleTheme,
-                            color: type === "ads" ? clickStyleTheme.color : styleTheme.color
+                            color:
+                              type === "ads"
+                                ? clickStyleTheme.color
+                                : styleTheme.color,
                           }}
                           onClick={() => {
-                            setData(null)
-                            handleClick("ads")
+                            setData(null);
+                            handleClick("ads");
                           }}
                         >
                           Ads
@@ -405,11 +495,14 @@ export const Profile = () => {
                             fullWidth
                             style={{
                               ...styleTheme,
-                              color: type === "bookmark" ? clickStyleTheme.color : styleTheme.color
+                              color:
+                                type === "bookmark"
+                                  ? clickStyleTheme.color
+                                  : styleTheme.color,
                             }}
                             onClick={() => {
-                              setData(null)
-                              handleClick("bookmark")
+                              setData(null);
+                              handleClick("bookmark");
                             }}
                           >
                             Bookmarks
@@ -430,5 +523,5 @@ export const Profile = () => {
         </Grid>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react"
-import "./Header.css"
+import React, { useContext, useState } from "react";
+import "./Header.css";
 import {
   AppBar,
   Button,
@@ -11,48 +11,48 @@ import {
   TextField,
   makeStyles,
   Toolbar,
-} from "@material-ui/core"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
-import { AuthContext } from "../../../context/authContext/authContext"
-import { Link, useNavigate, useLocation } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+} from "@material-ui/core";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { AuthContext } from "../../../context/authContext/authContext";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserGraduate,
   faHome,
   faBookReader,
   faHandsHelping,
   faComment,
-} from "@fortawesome/free-solid-svg-icons"
-import { FeedbackModal } from "../../pages/Modals/FeedbackModal"
+} from "@fortawesome/free-solid-svg-icons";
+import { FeedbackModal } from "../../pages/Modals/FeedbackModal";
 
 const currentTab = (location, path) => {
   if (location.pathname === path) {
-    return { color: "#03DAC6", fontSize: "28px" }
+    return { color: "#03DAC6", fontSize: "28px" };
   } else {
-    return { color: "grey", fontSize: "24px" }
+    return { color: "grey", fontSize: "24px" };
   }
-}
+};
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const authContext = useContext(AuthContext)
-  const [showFeedback, setShowFeedback] = useState(false)
-  const [moreOption, setMoreOption] = useState(null)
+  const authContext = useContext(AuthContext);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [moreOption, setMoreOption] = useState(null);
   const handleMoreOption = (e) => {
-    setMoreOption(e.currentTarget)
-  }
-  const open = Boolean(moreOption)
+    setMoreOption(e.currentTarget);
+  };
+  const open = Boolean(moreOption);
   const handleClose = () => {
-    setMoreOption(null)
-  }
+    setMoreOption(null);
+  };
 
   const handleFeedback = () => {
-    setShowFeedback(!showFeedback)
-  }
+    setShowFeedback(!showFeedback);
+  };
   const styleTheme =
     authContext.theme === "dark"
       ? { background: "#212121", color: "white" }
-      : { background: "white", color: "black" }
+      : { background: "white", color: "black" };
 
   const useStyles = makeStyles((theme) => ({
     textField: {
@@ -90,12 +90,24 @@ const Header = () => {
             <Button
               style={{ textTransform: "none" }}
               onClick={() => {
-                navigate("/")
+                navigate("/");
               }}
             >
-              {authContext.theme === "dark"
-                ? <img src="/cc_logo_horizontal_white.png" alt="logo" className="logo" height="40px" />
-                : <img src="/cc_logo_horizontal.png" alt="logo" className="logo" height="40px" />}
+              {authContext.theme === "dark" ? (
+                <img
+                  src="/cc_logo_horizontal_white.png"
+                  alt="logo"
+                  className="logo"
+                  height="40px"
+                />
+              ) : (
+                <img
+                  src="/cc_logo_horizontal.png"
+                  alt="logo"
+                  className="logo"
+                  height="40px"
+                />
+              )}
               {/* {authContext.theme === "dark"
                 ? <img src="/cc_logo_mobile_white.png" alt="logo" className="mobile-logo" height="40px" />
                 : <img src="/cc_logo_mobile.png" alt="logo" className="mobile-logo" height="40px" />} */}
@@ -147,7 +159,7 @@ const Header = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/chat">
+                <Link to="/chats">
                   <IconButton>
                     <FontAwesomeIcon
                       icon={faComment}
@@ -183,7 +195,7 @@ const Header = () => {
               <MenuItem
                 // onClick={handleClose}
                 onClick={() => {
-                  navigate(`/profile/${authContext.user._id}`)
+                  navigate(`/profile/${authContext.user._id}`);
                 }}
                 style={styleTheme}
               >
@@ -191,7 +203,7 @@ const Header = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate("/about-university")
+                  navigate("/about-university");
                 }}
                 style={styleTheme}
               >
@@ -206,7 +218,7 @@ const Header = () => {
               </MenuItem> */}
               <MenuItem
                 onClick={() => {
-                  navigate("/settings-privacy")
+                  navigate("/settings-privacy");
                 }}
                 style={styleTheme}
               >
@@ -214,8 +226,8 @@ const Header = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  handleFeedback()
-                  handleClose()
+                  handleFeedback();
+                  handleClose();
                 }}
                 style={styleTheme}
               >
@@ -223,7 +235,7 @@ const Header = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  authContext.signoutUser()
+                  authContext.signoutUser();
                 }}
                 style={styleTheme}
               >
@@ -234,6 +246,6 @@ const Header = () => {
         </Toolbar>
       </AppBar>
     </div>
-  )
-}
+  );
+};
 export default Header;

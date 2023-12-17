@@ -1,0 +1,11 @@
+.sidebar {
+  width: 320px;
+  height: 100%;
+  border: 1px solid cyan;
+}
+
+@media (max-width: 996px) {
+  .sidebar {
+    width: 100%;
+  }
+}

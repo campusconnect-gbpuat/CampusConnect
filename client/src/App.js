@@ -12,31 +12,34 @@ import { PostState } from "./context/postContext/PostState";
 import { UserState } from "./context/userContext/UserState";
 import { JobState } from "./context/jobContext/JobState";
 import { FirebaseContextProvider } from "./context/firebaseContext";
+import { ChatContextProvider } from "./context/chatContext/chatContext";
 
 export const App = () => {
   return (
     <FirebaseContextProvider>
-      <AuthState>
-        <UserState>
-          <PollState>
-            <PostState>
-              <BlogState>
-                <AdsState>
-                  <EventState>
-                    <JobState>
-                      <UpdateState>
-                        <NoticeState>
-                          <Routing />
-                        </NoticeState>
-                      </UpdateState>
-                    </JobState>
-                  </EventState>
-                </AdsState>
-              </BlogState>
-            </PostState>
-          </PollState>
-        </UserState>
-      </AuthState>
+      <ChatContextProvider>
+        <AuthState>
+          <UserState>
+            <PollState>
+              <PostState>
+                <BlogState>
+                  <AdsState>
+                    <EventState>
+                      <JobState>
+                        <UpdateState>
+                          <NoticeState>
+                            <Routing />
+                          </NoticeState>
+                        </UpdateState>
+                      </JobState>
+                    </EventState>
+                  </AdsState>
+                </BlogState>
+              </PostState>
+            </PollState>
+          </UserState>
+        </AuthState>
+      </ChatContextProvider>
     </FirebaseContextProvider>
   );
 };
