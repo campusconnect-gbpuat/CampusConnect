@@ -10,6 +10,7 @@ import styles from "./chat.module.css";
 import { Sidebar } from "./Sidebar";
 import { ChatContext } from "../../context/chatContext/chatContext";
 import { useMediaQuery } from "react-responsive";
+
 const Chat = () => {
   const authContext = useContext(AuthContext);
   const { chatId } = useContext(ChatContext);
