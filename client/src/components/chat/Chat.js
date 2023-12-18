@@ -21,15 +21,19 @@ const Chat = () => {
       <Header />
       <div className={styles.chatContainer}>
         <Sidebar />
-        <div
-          className={[
-            !chatId && isTabletOrMobile
-              ? styles.isActiveChat
-              : [styles.chatIdPage],
-          ]}
-        >
-          <ChatIdPage />
-        </div>
+        {chatId ? (
+          <div
+            className={[
+              !chatId && isTabletOrMobile
+                ? styles.isActiveChat
+                : [styles.chatIdPage],
+            ]}
+          >
+            <ChatIdPage />
+          </div>
+        ) : (
+          !isTabletOrMobile && <div>no select</div>
+        )}
       </div>
     </div>
   );

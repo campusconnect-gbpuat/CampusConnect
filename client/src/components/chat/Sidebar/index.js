@@ -39,6 +39,31 @@ export const Sidebar = () => {
         <SidebarItem />
         <SidebarItem />
         <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
+        <SidebarItem />
       </div>
     </div>
   );

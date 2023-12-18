@@ -1,0 +1,42 @@
+.chatAction {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.icon {
+  outline: none;
+  border: none;
+  background: transparent;
+  padding: 5px;
+  border-radius: 4px;
+}
+.icon:hover {
+  background-color: #fefffe;
+}
+.icon > svg {
+  font-size: 1.7rem;
+}
+
+.inputField {
+  flex: 1 1 0%;
+}
+
+.inputField input {
+  outline: none;
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  padding: 5px 20px;
+  font-size: 1.1rem;
+}
+.inputField > input::placeholder {
+  color: grey;
+}

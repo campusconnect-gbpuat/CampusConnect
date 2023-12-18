@@ -1,0 +1,36 @@
+.chatHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user {
+  display: flex;
+  flex: 1 1 0%;
+  gap: 0.6rem;
+}
+.chatHeader .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.userInfo > p {
+  font-size: 1.2rem;
+  margin: 0px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  max-width: 20ch;
+  overflow-x: hidden;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+}
+.chatSettings {
+}

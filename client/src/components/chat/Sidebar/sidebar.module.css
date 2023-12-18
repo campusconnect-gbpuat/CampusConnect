@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  /* border-right: 1px solid gray; */
 }
 
 .sidebarFixedContainer {
@@ -69,7 +70,7 @@ input::placeholder {
   scrollbar-color: transparent transparent;
 }
 .scrollableContainer::-webkit-scrollbar {
-  width: 9px;
+  width: 6px;
 }
 
 .scrollableContainer::-webkit-scrollbar-thumb {
@@ -172,5 +173,11 @@ input::placeholder {
 @media (max-width: 996px) {
   .sidebar {
     width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .scrollableContainer::-webkit-scrollbar {
+    width: 0px;
   }
 }
