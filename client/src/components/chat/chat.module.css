@@ -27,6 +27,38 @@
   transition: all 0.5s ease;
   width: 0px;
 }
+.NoChatSelected {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dedede;
+  background-image: url("https://www.shutterstock.com/image-vector/vector-seamless-mobile-apps-pattern-600nw-283356059.jpg");
+}
+
+.emptymessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #dedede;
+  border-radius: 12px;
+  padding: 10px;
+}
+.emptymessage .applogo {
+  width: 300px;
+  height: 100px;
+}
+.applogo > img {
+  width: 100%;
+  height: 100%;
+}
+.emptymessage > p {
+  font-size: 1.5rem;
+  text-align: center;
+  width: 60%;
+}
+
 @media (max-width: 996px) {
 }
 @media (max-width: 600px) {

@@ -1,0 +1,205 @@
+p {
+  margin: 0px;
+}
+.message {
+  display: flex;
+  width: 100%;
+  align-items: start;
+  gap: 0.5rem;
+}
+.yourMessage {
+  flex-direction: row-reverse;
+}
+.flexend {
+  display: flex;
+  justify-content: flex-end;
+}
+.hidden {
+  display: none;
+}
+.userAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.userAvatar > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.messageInfo {
+  /* margin should in case of other user  */
+  margin-top: 10px;
+  max-width: 40%;
+  padding: 10px 10px 20px;
+  background-color: #dedede;
+  border-radius: 6px;
+  position: relative;
+}
+
+.userName {
+  display: flex;
+  justify-content: space-between;
+}
+
+.verticalIcon {
+  font-size: 0.8rem;
+  opacity: 0;
+  cursor: pointer;
+}
+.messageInfo:hover .verticalIcon {
+  opacity: 1;
+}
+
+.userName > button {
+  outline: none;
+  padding: 0px;
+  border: none;
+}
+.userName > p {
+  margin: 0px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0741e2;
+}
+
+.textOrDoc {
+  display: flex;
+  align-items: start;
+  margin: 5px 0px;
+}
+.textOrDoc .messageImage {
+  max-width: 300px;
+  height: 200px;
+  border-radius: 12px;
+}
+.messageImage > a > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+.messageDocs {
+  /* margin: 5px 0px; */
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 12px;
+  padding: 5px 5px 10px;
+}
+
+.docsInfo {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-flow: column;
+  gap: 0.5rem;
+
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.docsImage {
+  max-width: 300px;
+  height: 150px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.docsImage > img {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.docsName {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: center;
+  padding: 0px 10px;
+}
+.docsIcon > svg {
+  width: 30px;
+  height: 30px;
+}
+.docsName > p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show before ellipsis */
+  -webkit-box-orient: vertical;
+  font-size: 0.97rem;
+  margin: 0;
+  font-weight: 500;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docsButtons {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 10px;
+}
+.docsButtons > a {
+  padding: 5px 20px;
+  flex: 1 1 0%;
+  outline: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  background-color: #fafafa;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+
+.docsButtons > a:hover {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  text-decoration: none;
+  color: black;
+}
+.textOrDoc > p {
+  font-size: 0.9rem;
+  margin: 0px;
+  font-weight: 500;
+  word-break: break-all;
+  overflow-x: hidden;
+  white-space: wrap;
+  flex: 1 1 0%;
+}
+
+.time {
+  position: absolute;
+  /* flex: 1 1 0%; */
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  right: 10px;
+  bottom: 0px;
+}
+.time > span {
+  align-self: flex-end;
+  font-size: 0.8rem;
+}
+@media (max-width: 768px) {
+  .messageInfo {
+    max-width: 50%;
+  }
+}
+@media (max-width: 600px) {
+  .messageInfo {
+    max-width: 70%;
+  }
+  .docsButtons {
+    display: none;
+  }
+  .messageDocs {
+    box-shadow: none;
+  }
+}

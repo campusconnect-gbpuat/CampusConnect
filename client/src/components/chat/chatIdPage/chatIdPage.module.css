@@ -19,6 +19,10 @@
 .chatMessages {
   flex: 1 1 0%;
   width: 100%;
+  overflow-y: scroll;
+}
+.chatMessages::-webkit-scrollbar {
+  display: none;
 }
 .chatAction {
   width: 100%;

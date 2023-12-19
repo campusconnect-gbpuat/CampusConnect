@@ -20,7 +20,7 @@ const Chat = () => {
       <HeaderMobile />
       <Header />
       <div className={styles.chatContainer}>
-        <Sidebar />
+        {(!chatId || !isTabletOrMobile) && <Sidebar />}
         {chatId ? (
           <div
             className={[
@@ -32,7 +32,18 @@ const Chat = () => {
             <ChatIdPage />
           </div>
         ) : (
-          !isTabletOrMobile && <div>no select</div>
+          !isTabletOrMobile && (
+            <div className={styles.chatIdPage}>
+              <div className={styles.NoChatSelected}>
+                <div className={styles.emptymessage}>
+                  <div className={styles.applogo}>
+                    <img src="/cc_logo_horizontal.png" />
+                  </div>
+                  {/* <p> Bringing people closer through the power of words.</p> */}
+                </div>
+              </div>
+            </div>
+          )
         )}
       </div>
     </div>
