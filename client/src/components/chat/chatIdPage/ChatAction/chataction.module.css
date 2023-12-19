@@ -9,6 +9,20 @@
   display: flex;
   align-items: center;
   gap: 0.2rem;
+  position: relative;
+}
+.popover {
+  position: absolute;
+  bottom: 50px;
+  transform: scale(0);
+  transform-origin: top center;
+  transition: transform 10s ease-out;
+  display: none;
+
+}
+.popovershow {
+  display: block;
+  transform: scale(1);
 }
 
 .icon {
@@ -29,14 +43,24 @@
   flex: 1 1 0%;
 }
 
-.inputField input {
+.inputField > textarea {
   outline: none;
   width: 100%;
+  max-height: 4.5em;
+  resize: none;
+  height: auto;
   border: none;
-  border-radius: 25px;
-  padding: 5px 20px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  padding: 4px 20px;
   font-size: 1.1rem;
+  scroll-behavior: smooth;
 }
-.inputField > input::placeholder {
+.inputField > textarea::-webkit-scrollbar {
+  width: 0px;
+  display: none !important;
+}
+.inputField > textarea::placeholder {
   color: grey;
+  text-align: start;
 }

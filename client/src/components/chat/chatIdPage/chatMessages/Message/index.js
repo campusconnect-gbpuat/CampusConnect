@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./message.module.css";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
@@ -7,42 +7,45 @@ import { MessageImage } from "./messageImage";
 import { MessageText } from "./messageText";
 
 const MessageComponent = {
-  img: MessageImage,
+  image: MessageImage,
   text: MessageText,
-  doc: MessageDoc,
+  document: MessageDoc,
 };
-export const Message = ({ me, type }) => {
-  // const me = true;
-  // const me = false;
-  const Component = MessageComponent[type];
+export const Message = ({ me, userData, message }) => {
+  const Component = MessageComponent[message?.type];
+  const scrollRef = useRef();
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+  console.log(userData);
 
   return (
     <div
+      ref={scrollRef}
       className={
         me ? `${styles.message} ${styles.yourMessage}` : styles.message
       }
     >
       <div className={me ? `${styles.hidden}` : styles.userAvatar}>
         {/* user avatar */}
-        <img src="https://i.pravatar.cc/200" alt="user_avatar" />
+        <img src={`${userData?.photoUrl}`} alt="user_avatar" />
       </div>
-      <div className={styles.messageInfo}>
+      <div
+        className={
+          me
+            ? `${styles.messageInfo} ${styles.meArc}`
+            : `${styles.messageInfo} ${styles.otherArc}`
+        }
+      >
         <div className={styles.userName}>
-          <p>
-            {/* user name */}
-            {me ? "You" : "Anmol Gangwar "}
-          </p>
+          <p>{me ? "You" : `${userData?.name}`}</p>
           <span className={!me ? `${styles.hidden}` : styles.verticalIcon}>
             <MoreVertIcon style={{ fontSize: "1rem" }} />
           </span>
         </div>
         <div className={styles.textOrDoc}>
           {/* actual message text or docs */}
-          <Component />
-          {/* messageImage div */}
-          {/* {<MessageImage />} */}
-          {/* docs components */}
-          {/* <MessageDoc /> */}
+          <Component {...{ [message["type"]]: message[message["type"]] }} />
         </div>
         <div className={styles.time}>
           {/* time  */}

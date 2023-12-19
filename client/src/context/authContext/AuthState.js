@@ -156,7 +156,10 @@ export const AuthState = ({ children }) => {
     try {
       const response = await axios.get(`${API}/signout`);
       await signOut(auth);
+      localStorage.removeItem("talkingWithId");
+      localStorage.removeItem("chatId");
       localStorage.removeItem("_data");
+      localStorage.clear();
       dispatch({
         type: SIGNOUT_USER,
         payload: response.data.msg,

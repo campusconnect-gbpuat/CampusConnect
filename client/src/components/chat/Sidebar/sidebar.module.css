@@ -4,7 +4,11 @@
   /* border: 1px solid cyan; */
   display: flex;
   flex-direction: column;
+  /* bg-new added */
+  background-color: #dedede;
   gap: 1rem;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   /* border-right: 1px solid gray; */
 }
 
@@ -74,7 +78,7 @@ input::placeholder {
 }
 
 .scrollableContainer::-webkit-scrollbar-thumb {
-  background-color: #fff;
+  background-color: #dedede;
   border-radius: 22px;
 }
 
@@ -89,12 +93,20 @@ input::placeholder {
   cursor: pointer;
   display: flex;
   padding: 5px 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   width: 100%;
   align-items: center;
   gap: 0.5rem;
   margin: 1rem 0px;
   border-radius: 8px;
+}
+
+.SidebarItemActive,
+.SidebarItem:hover {
+  background-color: #fafafa;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 .SidebarItem:hover {
   /* box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
@@ -146,7 +158,7 @@ input::placeholder {
 .SidebarRightBottomLeft {
   flex: 1 1 0%;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   gap: 0.2rem;
 }
 
@@ -169,6 +181,11 @@ input::placeholder {
   max-width: 15ch;
   overflow-x: hidden;
   white-space: nowrap;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+.SidebarRightBottomLeft > svg {
+  font-size: 20px;
 }
 @media (max-width: 996px) {
   .sidebar {
