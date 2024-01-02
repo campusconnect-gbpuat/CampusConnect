@@ -48,6 +48,7 @@ export const Message = ({ me, userData, message }) => {
 
   // console.log(isMessageDeletedForMe, isMessageDeletedForEveryone);
   const isMessageDeletedByme = message.deletedFor.includes(message.senderId);
+  const isOwnerofMessage = message.senderId === authContext.user._id;
   return (
     <div
       ref={scrollRef}
@@ -68,7 +69,11 @@ export const Message = ({ me, userData, message }) => {
       >
         <div className={styles.userName}>
           <p>{me ? "You" : `${userData?.name}`}</p>
-          <span className={styles.verticalIcon}>
+          <span
+            className={
+              isMessageDeletedForMe ? `${styles.hidden}` : styles.verticalIcon
+            }
+          >
             <MoreVertIcon
               onClick={() => setPopOver(!popOver)}
               style={{ fontSize: "1rem", marginLeft: "1rem" }}
@@ -82,13 +87,15 @@ export const Message = ({ me, userData, message }) => {
                     style={{ fontSize: "1rem", marginLeft: "4px" }}
                   />
                 </span>
-                <span onClick={() => setPopOver(!popOver)}>
-                  edit{" "}
-                  <EditIcon
-                    onClick={() => setPopOver(!popOver)}
-                    style={{ fontSize: "1rem", marginLeft: "4px" }}
-                  />
-                </span>
+                {isOwnerofMessage && (
+                  <span onClick={() => setPopOver(!popOver)}>
+                    edit{" "}
+                    <EditIcon
+                      onClick={() => setPopOver(!popOver)}
+                      style={{ fontSize: "1rem", marginLeft: "4px" }}
+                    />
+                  </span>
+                )}
               </div>
             )}
           </span>

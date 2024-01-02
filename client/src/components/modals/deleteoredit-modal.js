@@ -47,10 +47,14 @@ const DeleteOrEditModal = () => {
         },
         [chatId + ".date"]: serverTimestamp(),
       });
+      onClose();
     } catch (err) {
       console.log(err);
+    } finally {
+      onClose();
     }
   };
+
   const deleteForEveryoneHandler = async () => {
     try {
       const chats = await getDoc(doc(db, "chats", chatId));
@@ -93,10 +97,15 @@ const DeleteOrEditModal = () => {
         },
         [chatId + ".date"]: serverTimestamp(),
       });
+      onClose();
     } catch (err) {
       console.log(err);
+    } finally {
+      onClose();
     }
   };
+
+  const isOwnerofMessage = modalState.data.senderId === authContext.user._id;
   return (
     <div className={styles.modal}>
       <div onClick={onClose} className={styles.modalDropShadow}></div>
@@ -106,9 +115,11 @@ const DeleteOrEditModal = () => {
           <p>You can delete messages for everyone or just for yourself</p>
         </div>
         <div className={styles.modalbuttons}>
-          <button onClick={deleteForEveryoneHandler}>
-            Delete for everyone
-          </button>
+          {isOwnerofMessage && (
+            <button onClick={deleteForEveryoneHandler}>
+              Delete for everyone
+            </button>
+          )}
           <button onClick={deleteForMeHandler}>Delete for me</button>
           <button className={styles.CancelButton} onClick={onClose}>
             Cancel{" "}

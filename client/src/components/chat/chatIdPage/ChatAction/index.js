@@ -38,7 +38,7 @@ export const ChatAction = ({ userData }) => {
       setInputVal((prev) => prev + "\n");
     }
   };
-  console.log(inputVal);
+
   const handleSendMessage = async () => {
     if (inputVal) {
       const messageId = uuid();
@@ -47,7 +47,7 @@ export const ChatAction = ({ userData }) => {
           messages: arrayUnion({
             messageId: messageId,
             type: "text",
-            text: inputVal,
+            text: inputVal.trim(),
             deletedFor: [],
             senderId: authContext.user._id,
             date: Timestamp.now(),
@@ -56,7 +56,7 @@ export const ChatAction = ({ userData }) => {
         await updateDoc(doc(db, "userChats", authContext.user._id), {
           [chatId + ".lastMessage"]: {
             type: "text",
-            text: inputVal,
+            text: inputVal.trim(),
             deletedFor: [],
             messageId: messageId,
             senderId: authContext?.user?._id,
@@ -66,7 +66,7 @@ export const ChatAction = ({ userData }) => {
         await updateDoc(doc(db, "userChats", userData?.appUserId), {
           [chatId + ".lastMessage"]: {
             type: "text",
-            text: inputVal,
+            text: inputVal.trim(),
             deletedFor: [],
             messageId: messageId,
             senderId: authContext?.user?._id,
