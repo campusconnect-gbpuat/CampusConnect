@@ -1,0 +1,75 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.modal {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalDropShadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  background-color: black;
+  opacity: 0.6;
+}
+
+.ModalContainer {
+  position: relative;
+  z-index: 9999999;
+  width: 35%;
+  max-height: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  background-color: white;
+}
+
+.modalheader {
+  text-align: center;
+}
+.modalheader > h2 {
+  font-size: 1.5rem;
+}
+.modalheader > p {
+  font-size: 1rem;
+}
+
+.modalbuttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.modalbuttons > button {
+  outline: none;
+  border: none;
+  color: #37b1ee;
+  background: transparent;
+  font-weight: 600;
+  padding: 5px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+}
+
+.modalbuttons .CancelButton,
+.modalbuttons > button:hover {
+  background: black;
+  color: white;
+}
+@media (max-width: 768px) {
+  .ModalContainer {
+    width: 70%;
+  }
+  .modalbuttons {
+    flex-direction: column;
+  }
+}

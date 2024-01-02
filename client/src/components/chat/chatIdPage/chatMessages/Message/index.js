@@ -1,10 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./message.module.css";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { MessageDoc } from "./messageDoc";
 import { MessageImage } from "./messageImage";
 import { MessageText } from "./messageText";
+import { ModalContext } from "../../../../../context/modalContext";
+import { ModalType } from "../../../../../context/modalContext/modalTypes";
+import { AuthContext } from "../../../../../context/authContext/authContext";
+import { MessageDeleted } from "./messageDeleted";
 
 const MessageComponent = {
   image: MessageImage,
@@ -13,12 +18,36 @@ const MessageComponent = {
 };
 export const Message = ({ me, userData, message }) => {
   const Component = MessageComponent[message?.type];
+  const [popOver, setPopOver] = useState(false);
+  const { setModalState } = useContext(ModalContext);
+  const authContext = useContext(AuthContext);
   const scrollRef = useRef();
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
-  console.log(userData);
+  // console.log(userData);
 
+  const handleDeleteModal = () => {
+    setPopOver(false);
+    setModalState({
+      type: ModalType.DeleteOrEdit,
+      open: true,
+      data: message,
+    });
+  };
+
+  // console.log(message);
+
+  const isMessageDeletedForMe = message.deletedFor.includes(
+    authContext?.user._id
+  );
+
+  const isMessageDeletedForEveryone =
+    message.deletedFor.includes(authContext?.user._id) &&
+    message.deletedFor.includes(userData?.appUserId);
+
+  // console.log(isMessageDeletedForMe, isMessageDeletedForEveryone);
+  const isMessageDeletedByme = message.deletedFor.includes(message.senderId);
   return (
     <div
       ref={scrollRef}
@@ -39,13 +68,44 @@ export const Message = ({ me, userData, message }) => {
       >
         <div className={styles.userName}>
           <p>{me ? "You" : `${userData?.name}`}</p>
-          <span className={!me ? `${styles.hidden}` : styles.verticalIcon}>
-            <MoreVertIcon style={{ fontSize: "1rem" }} />
+          <span className={styles.verticalIcon}>
+            <MoreVertIcon
+              onClick={() => setPopOver(!popOver)}
+              style={{ fontSize: "1rem", marginLeft: "1rem" }}
+            />
+            {popOver && !isMessageDeletedForMe && (
+              <div className={styles.deleteOrEdit}>
+                <span onClick={handleDeleteModal}>
+                  delete
+                  <DeleteIcon
+                    onClick={() => setPopOver(!popOver)}
+                    style={{ fontSize: "1rem", marginLeft: "4px" }}
+                  />
+                </span>
+                <span onClick={() => setPopOver(!popOver)}>
+                  edit{" "}
+                  <EditIcon
+                    onClick={() => setPopOver(!popOver)}
+                    style={{ fontSize: "1rem", marginLeft: "4px" }}
+                  />
+                </span>
+              </div>
+            )}
           </span>
         </div>
         <div className={styles.textOrDoc}>
           {/* actual message text or docs */}
-          <Component {...{ [message["type"]]: message[message["type"]] }} />
+          {isMessageDeletedForMe ? (
+            <MessageDeleted
+              name={
+                (me && isMessageDeletedForMe) || !isMessageDeletedByme
+                  ? "You"
+                  : `${userData?.name}`
+              }
+            />
+          ) : (
+            <Component {...{ [message["type"]]: message[message["type"]] }} />
+          )}
         </div>
         <div className={styles.time}>
           {/* time  */}

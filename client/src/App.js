@@ -13,31 +13,36 @@ import { UserState } from "./context/userContext/UserState";
 import { JobState } from "./context/jobContext/JobState";
 import { FirebaseContextProvider } from "./context/firebaseContext";
 import { ChatContextProvider } from "./context/chatContext/chatContext";
+import ModalProvider from "./components/Providers/modal-provider";
+import { ModalContextProvider } from "./context/modalContext";
 
 export const App = () => {
   return (
     <FirebaseContextProvider>
       <ChatContextProvider>
         <AuthState>
-          <UserState>
-            <PollState>
-              <PostState>
-                <BlogState>
-                  <AdsState>
-                    <EventState>
-                      <JobState>
-                        <UpdateState>
-                          <NoticeState>
-                            <Routing />
-                          </NoticeState>
-                        </UpdateState>
-                      </JobState>
-                    </EventState>
-                  </AdsState>
-                </BlogState>
-              </PostState>
-            </PollState>
-          </UserState>
+          <ModalContextProvider>
+            <ModalProvider />
+            <UserState>
+              <PollState>
+                <PostState>
+                  <BlogState>
+                    <AdsState>
+                      <EventState>
+                        <JobState>
+                          <UpdateState>
+                            <NoticeState>
+                              <Routing />
+                            </NoticeState>
+                          </UpdateState>
+                        </JobState>
+                      </EventState>
+                    </AdsState>
+                  </BlogState>
+                </PostState>
+              </PollState>
+            </UserState>
+          </ModalContextProvider>
         </AuthState>
       </ChatContextProvider>
     </FirebaseContextProvider>

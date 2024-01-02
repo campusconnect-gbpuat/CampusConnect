@@ -19,6 +19,47 @@ const SidebarItem = ({ chat }) => {
 
   const activeChat = chatId === chat?.chatId;
 
+  const isDeletedByMe = chat?.lastMessage?.deletedFor.includes(
+    authContext?.user._id
+  );
+
+  console.log(isDeletedByMe);
+
+  const renderText = () => {
+    if (!isDeletedByMe && chat?.lastMessage?.deletedFor.length > 0) {
+      return <p>{`${userData?.name.split(" ")[0]} deleted this message`}</p>;
+    }
+
+    if (isDeletedByMe && chat?.lastMessage?.deletedFor.length > 0) {
+      return (
+        <p style={{ fontStyle: "italic", fontWeight: 600, color: "grey" }}>
+          You deleted this message
+        </p>
+      );
+    }
+
+    return (
+      <>
+        {chat?.lastMessage && chat?.lastMessage.type === "image" ? (
+          <ImageIcon />
+        ) : chat?.lastMessage && chat?.lastMessage.type === "document" ? (
+          <FileCopyOutlined />
+        ) : (
+          ""
+        )}
+        <p>
+          {chat?.lastMessage && chat?.lastMessage.type === "image"
+            ? "Image"
+            : chat?.lastMessage && chat?.lastMessage.type === "document"
+            ? "anmol.pdf"
+            : chat?.lastMessage && chat?.lastMessage.type === "text"
+            ? `${chat?.lastMessage[chat?.lastMessage["type"]]}`
+            : ""}
+        </p>
+      </>
+    );
+  };
+
   return (
     <div
       className={
@@ -50,22 +91,17 @@ const SidebarItem = ({ chat }) => {
                   : `${userData?.name.split(" ")[0]}:`
                 : ""}
             </span>
-            {chat?.lastMessage && chat?.lastMessage.type === "image" ? (
-              <ImageIcon />
-            ) : chat?.lastMessage && chat?.lastMessage.type === "document" ? (
-              <FileCopyOutlined />
-            ) : (
-              ""
-            )}
-            <p>
-              {chat?.lastMessage && chat?.lastMessage.type === "image"
-                ? "Image"
-                : chat?.lastMessage && chat?.lastMessage.type === "document"
-                ? "anmol.pdf"
-                : chat?.lastMessage && chat?.lastMessage.type === "text"
-                ? `${chat?.lastMessage[chat?.lastMessage["type"]]}`
+            {/*  check the deletedFor Id is the id is currentUser then you else name */}
+
+            {/* <p style={{ fontStyle: "italic" }}>
+              {chat?.lastMessage
+                ? chat?.lastMessage?.senderId === authContext.user._id &&
+                  isDeletedForMe
+                  ? "You deleted this message"
+                  : `${userData?.name.split(" ")[0]} deleted this message`
                 : ""}
-            </p>
+            </p> */}
+            {renderText()}
           </div>
         </div>
       </div>

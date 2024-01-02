@@ -33,6 +33,12 @@ export const ChatAction = ({ userData }) => {
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
   }, [inputVal]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setInputVal((prev) => prev + "\n");
+    }
+  };
+  console.log(inputVal);
   const handleSendMessage = async () => {
     if (inputVal) {
       const messageId = uuid();
@@ -41,7 +47,8 @@ export const ChatAction = ({ userData }) => {
           messages: arrayUnion({
             messageId: messageId,
             type: "text",
-            text: `${inputVal.trim()}`,
+            text: inputVal,
+            deletedFor: [],
             senderId: authContext.user._id,
             date: Timestamp.now(),
           }),
@@ -49,7 +56,8 @@ export const ChatAction = ({ userData }) => {
         await updateDoc(doc(db, "userChats", authContext.user._id), {
           [chatId + ".lastMessage"]: {
             type: "text",
-            text: `${inputVal.trim()}`,
+            text: inputVal,
+            deletedFor: [],
             messageId: messageId,
             senderId: authContext?.user?._id,
           },
@@ -58,7 +66,8 @@ export const ChatAction = ({ userData }) => {
         await updateDoc(doc(db, "userChats", userData?.appUserId), {
           [chatId + ".lastMessage"]: {
             type: "text",
-            text: `${inputVal.trim()}`,
+            text: inputVal,
+            deletedFor: [],
             messageId: messageId,
             senderId: authContext?.user?._id,
           },
@@ -117,6 +126,7 @@ export const ChatAction = ({ userData }) => {
           onChange={onChangeTextField}
           placeholder="Type a message"
           type="text"
+          onKeyDown={handleKeyDown}
           spellCheck="false"
           minLengthLength={1}
           rows={1}

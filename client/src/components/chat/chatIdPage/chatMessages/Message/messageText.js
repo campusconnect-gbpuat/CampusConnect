@@ -14,5 +14,5 @@ export const MessageText = ({ text }) => {
     return <span className={styles.doubleEmoji}>{text}</span>;
   }
 
-  return <p>{`${text}`}</p>;
+  return <p style={{ whiteSpace: "pre-line" }}>{text}</p>;
 };
