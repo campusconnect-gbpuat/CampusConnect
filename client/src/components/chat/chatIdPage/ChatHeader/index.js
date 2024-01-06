@@ -1,21 +1,31 @@
 import styles from "./chatheader.module.css";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ArrowBack from "@material-ui/icons/ArrowBack";
+import WallpaperIcon from "@material-ui/icons/Wallpaper";
 
 import { useContext, useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { ChatContext } from "../../../../context/chatContext/chatContext";
+import { ModalContext } from "../../../../context/modalContext";
+import { ModalType } from "../../../../context/modalContext/modalTypes";
 
 export const ChatHeader = ({ userData }) => {
   // console.log(userData);
+  const { modalState, setModalState, onClose } = useContext(ModalContext);
+  const [chatSettingsPopOver, setChatSettingsPopOver] = useState(false);
+  const { setChatId, setTalkingWithId, setChatWallpaper } =
+    useContext(ChatContext);
 
-  const { setChatId, setTalkingWithId } = useContext(ChatContext);
   const handleArrowBack = () => {
     localStorage.removeItem("chatId");
+    localStorage.removeItem("chatWallpaper");
     localStorage.removeItem("talkingWithId");
     setChatId("");
     setTalkingWithId("");
+    setChatWallpaper("");
   };
+
+  console.log(userData);
   return (
     <div className={styles.chatHeader}>
       <div className={styles.user}>
@@ -34,9 +44,29 @@ export const ChatHeader = ({ userData }) => {
           <span>Online</span>
         </div>
       </div>
-      <div className={styles.chatSettings}>
+      <div
+        onClick={() => setChatSettingsPopOver(!chatSettingsPopOver)}
+        className={styles.chatSettings}
+      >
         {/* chat Settings */}
         <MoreVertIcon />
+        {chatSettingsPopOver && (
+          <div className={styles.chatSettingsPopOver}>
+            <h3>Chat Settings</h3>
+            <button
+              onClick={() =>
+                setModalState((prev) => ({
+                  ...prev,
+                  type: ModalType.ChatWallPapper,
+                  open: true,
+                }))
+              }
+            >
+              <WallpaperIcon />
+              Wallpaper
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -6,13 +6,19 @@ import { AuthContext } from "../../../context/authContext/authContext";
 import ImageIcon from "@material-ui/icons/ImageOutlined";
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 const SidebarItem = ({ chat }) => {
-  const { setTalkingWithId, setChatId, chatId } = useContext(ChatContext);
+  const { setTalkingWithId, setChatId, chatId, setChatWallpaper } =
+    useContext(ChatContext);
   const authContext = useContext(AuthContext);
   const handleSelect = () => {
     localStorage.setItem("chatId", chat?.chatId);
     localStorage.setItem("talkingWithId", chat?.talkingWith?.userId);
+    localStorage.setItem(
+      "chatWallpaper",
+      JSON.stringify(chat?.userPerference?.chatWallpaper || "")
+    );
     setChatId(chat?.chatId);
     setTalkingWithId(chat?.talkingWith?.userId);
+    setChatWallpaper(chat?.userPerference?.chatWallpaper);
   };
 
   const userData = useGetUserData(chat?.talkingWith?.userId);
@@ -25,9 +31,14 @@ const SidebarItem = ({ chat }) => {
 
   console.log(isDeletedByMe);
 
+  console.log(chat);
   const renderText = () => {
     if (!isDeletedByMe && chat?.lastMessage?.deletedFor.length > 0) {
-      return <p>{`${userData?.name.split(" ")[0]} deleted this message`}</p>;
+      return (
+        <p style={{ fontStyle: "italic", fontWeight: 600, color: "grey" }}>{`${
+          userData?.name.split(" ")[0]
+        } deleted this message`}</p>
+      );
     }
 
     if (isDeletedByMe && chat?.lastMessage?.deletedFor.length > 0) {

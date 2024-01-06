@@ -1,0 +1,85 @@
+.fileUpload {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modalbuttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.ModalContainer {
+  position: relative;
+  z-index: 9999999;
+  width: 50%;
+  max-height: 600px;
+  user-select: none;
+
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  background-color: white;
+}
+
+.modalbuttons > button {
+  outline: none;
+  border: none;
+  color: #fff;
+  background: #000;
+  font-weight: 600;
+  padding: 5px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #000;
+}
+
+.modalbuttons > button:hover {
+  color: #37b1ee;
+  background: #fff;
+  border: 1px solid #37b1ee;
+}
+
+.gridContainer {
+  columns: 4 100px;
+  column-gap: 1rem;
+  width: 90%;
+  max-height: 400px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  overflow-y: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.gridContainer::-webkit-scrollbar {
+  width: 0px;
+}
+
+.gridContainer > div {
+  width: 100%;
+  margin: 0 1.5rem 1.5rem 0;
+  display: inline-block;
+  width: 100%;
+  scroll-snap-align: center;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.25s ease-in-out;
+}
+
+.ChatWallpaperImg {
+  width: 100%;
+  border-radius: 5px;
+
+  transition: all 0.25s ease-in-out;
+}
+
+.ChatWallpaperImg:hover {
+  scale: 1.1;
+}
+@media (max-width: 768px) {
+  .ModalContainer {
+    width: 90%;
+  }
+}
