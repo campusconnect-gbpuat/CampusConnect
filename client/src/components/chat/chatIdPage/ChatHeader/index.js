@@ -34,8 +34,15 @@ export const ChatHeader = ({ userData }) => {
           <ArrowBack onClick={handleArrowBack} />
           <div className={styles.avatar}>
             {/* avatar */}
-
-            <img src={`${userData?.photoUrl}`} alt="user_avatar" />
+            {/*  below image will  changed once the profile update get fix !!*/}
+            <img
+              src={`${
+                userData?.photoUrl
+                  ? "https://firebasestorage.googleapis.com/v0/b/campus-connect-90a41.appspot.com/o/image%2F2024644_login_user_avatar_person_users_icon.png?alt=media&token=639b6775-2181-4c05-985c-a7797d4a95bd"
+                  : userData?.photoUrl
+              }`}
+              alt="user_avatar"
+            />
           </div>
         </div>
         <div className={styles.userInfo}>
