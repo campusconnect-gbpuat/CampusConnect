@@ -5,6 +5,8 @@ export const ChatContextProvider = ({ children }) => {
   const [chatId, setChatId] = useState("");
   const [talkingWithId, setTalkingWithId] = useState("");
   const [chatWallpaper, setChatWallpaper] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const chatId = localStorage.getItem("chatId");
     const talkingWithId = localStorage.getItem("talkingWithId");
@@ -23,6 +25,8 @@ export const ChatContextProvider = ({ children }) => {
         talkingWithId,
         chatWallpaper,
         setChatWallpaper,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}

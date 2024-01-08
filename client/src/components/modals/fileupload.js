@@ -14,9 +14,11 @@ import PdfIcon from "@material-ui/icons/FileCopy";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 const FileUpload = () => {
   const { modalState, setModalState, onClose } = useContext(ModalContext);
-  const { chatId, talkingWithId } = useContext(ChatContext);
+  const { chatId, talkingWithId, setIsLoading, isLoading } =
+    useContext(ChatContext);
   const authContext = useContext(AuthContext);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
   const [uploadItemFromUrl, setUploadItemFromUrl] = useState("");
   const [uploadItemFile, setUploadItemFile] = useState("");
   const isCurrentModalOpen =
@@ -36,26 +38,33 @@ const FileUpload = () => {
   };
 
   const resetHandler = () => {
-    setUploadItemFile("");
-    setUploadItemFromUrl("");
-    setUploadProgress(0);
+    if (!isLoading) {
+      setUploadItemFile("");
+      setUploadItemFromUrl("");
+      setUploadProgress(0);
+    }
   };
 
   const ModalCloseHandler = () => {
-    onClose();
-    resetHandler();
+    if (!isLoading) {
+      onClose();
+      resetHandler();
+      setIsLoading(false);
+    }
   };
 
   const fileSaveHandler = async () => {
     if (uploadItemFromUrl) {
+      setIsLoading(true);
       modalState?.data?.function({
         messageType: modalState?.data?.messageType,
         downloadLink: uploadItemFromUrl,
       });
-      resetHandler();
+      ModalCloseHandler();
     }
 
     if (uploadItemFile) {
+      setIsLoading(true);
       try {
         const metaData = {
           contentType: uploadItemFile.type,
@@ -73,11 +82,11 @@ const FileUpload = () => {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
+            setIsUploading(true);
             const progress = Math.round(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             console.log("Upload is " + progress + "% done");
-
             setUploadProgress(progress);
           },
           (error) => {
@@ -87,7 +96,8 @@ const FileUpload = () => {
             // Upload completed successfully, now we can get the download URL
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               console.log("File available at", downloadURL);
-
+              setIsUploading(false);
+              ModalCloseHandler();
               modalState?.data.function({
                 messageType: modalState?.data?.messageType,
                 downloadLink: downloadURL,
@@ -103,9 +113,10 @@ const FileUpload = () => {
       }
     }
   };
+
   return (
     <div className={styles.modal}>
-      <div onClick={onClose} className={styles.modalDropShadow}></div>
+      <div onClick={ModalCloseHandler} className={styles.modalDropShadow}></div>
       <div
         className={`${styles.ModalContainer} ${fileUploadstyles.ModalContainer}`}
       >
@@ -158,13 +169,16 @@ const FileUpload = () => {
                     }
                     alt="uploaditem"
                   />
-                  <CancelIcon onClick={resetHandler} />
+                  <CancelIcon disabled={isLoading} onClick={resetHandler} />
                 </div>
-                <div className={fileUploadstyles.uploadProgress}>
-                  <progress id="file" value={uploadProgress} max="100">
+                {isUploading && (
+                  <div className={fileUploadstyles.uploadFileProgress}>
+                    {/* <progress id="file" value={uploadProgress} max="100">
                     {uploadProgress}
-                  </progress>
-                </div>
+                  </progress> */}{" "}
+                    <span>{`${uploadProgress}% uploaded`}</span>
+                  </div>
+                )}
               </div>
             )}
           {(uploadItemFile || uploadItemFromUrl) &&
@@ -181,21 +195,32 @@ const FileUpload = () => {
                     <span className={fileUploadstyles.docsIcon}>
                       <PdfIcon />
                     </span>
-                    <p>
-                      This is a pdf
-                      skdhfkshdfkhsdkfhskdhfksdhfkjshdfkhsdkfhksdhfksdhfkjshdfkhsdkfhskd
-                    </p>
+                    <p>{uploadItemFile?.name}</p>
                   </div>
+                  <CancelIcon onClick={resetHandler} />
                 </div>
+                {isUploading && (
+                  <div className={fileUploadstyles.uploadFileProgress}>
+                    {/* <progress id="file" value={uploadProgress} max="100">
+                    {uploadProgress}
+                  </progress> */}{" "}
+                    <span>{`${uploadProgress}% uploaded`}</span>
+                  </div>
+                )}
               </div>
             )}
         </div>
-        <div className={styles.modalbuttons}>
-          <button onClick={fileSaveHandler}>
-            {modalState?.data?.buttonText}
+        <div className={`${styles.modalbuttons}`}>
+          <button disabled={isLoading} onClick={fileSaveHandler}>
+            {isLoading && <span className={fileUploadstyles.loader}></span>}
+            <span>{modalState?.data?.buttonText}</span>
           </button>
 
-          <button className={styles.CancelButton} onClick={ModalCloseHandler}>
+          <button
+            disabled={isLoading}
+            className={styles.CancelButton}
+            onClick={ModalCloseHandler}
+          >
             Cancel
           </button>
         </div>

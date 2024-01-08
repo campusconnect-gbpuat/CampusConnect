@@ -87,7 +87,8 @@ export const AuthState = ({ children }) => {
           uid: firebaseUser.user.uid,
           name: signupData.name,
           email: firebaseUser.user.email,
-          photoUrl: "https://i.pravatar.cc/200",
+          photoUrl:
+            "https://firebasestorage.googleapis.com/v0/b/campus-connect-90a41.appspot.com/o/image%2F2024644_login_user_avatar_person_users_icon.png?alt=media&token=639b6775-2181-4c05-985c-a7797d4a95bd",
           appUserId: response.data.data._id,
         });
 
