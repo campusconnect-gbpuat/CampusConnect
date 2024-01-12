@@ -14,6 +14,7 @@ exports.signup = (req, res) => {
   const { name, dob, email, password, collegeId, rollno } = req.body;
   User.findOne({ email }).exec((err, user) => {
     if (err) {
+      console.log(err);
       return res.status(400).json({
         errorMsg: "An error occured",
       });
