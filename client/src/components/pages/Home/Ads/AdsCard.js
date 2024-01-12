@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom"
 import { AdsContext } from "../../../../context/adsContext/AdsContext"
 import { AuthContext } from "../../../../context/authContext/authContext"
 // import { UserContext } from "../../../../context/userContext/UserContext"
-import { API } from "../../../../utils/proxy"
+import { API, CDN_URL } from "../../../../utils/proxy"
 import { AdsModal } from "../../Modals/AdsModal"
 
 export const AdsCard = ({ ads }) => {
@@ -122,7 +122,7 @@ export const AdsCard = ({ ads }) => {
         </Typography>
         <div className="centered-image-container">
           {ads.picture.length > 0 && (
-            <img className="centered-image" height="100%" src={`http://localhost:5000/${ads.picture[0]}`} alt={ads.picture[0]} />
+            <img className="centered-image" height="100%" src={`${CDN_URL}/${ads.picture[0]}`} alt={ads.picture[0]} />
           )}
         </div>
       </CardContent>

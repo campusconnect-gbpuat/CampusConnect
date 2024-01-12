@@ -36,7 +36,7 @@ import { BlogContext } from "../../../../context/blogContext/BlogContext"
 import { BlogModal } from "../../Modals/BlogModal"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../../../context/userContext/UserContext"
-import { API } from "../../../../utils/proxy"
+import { API, CDN_URL } from "../../../../utils/proxy"
 
 export const BlogCard = ({ blog }) => {
   const navigate = useNavigate()
@@ -221,7 +221,7 @@ export const BlogCard = ({ blog }) => {
         </CardContent>
         <div className="centered-image-container">
           {blog.picture && (
-            <img className="centered-image" height="100%" src={`http://localhost:5000/${blog.picture}`} alt={blog.picture} />
+            <img className="centered-image" height="100%" src={`${CDN_URL}/${blog.picture}`} alt={blog.picture} />
           )}
         </div>
         <CardActions disableSpacing>

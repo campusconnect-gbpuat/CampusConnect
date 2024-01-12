@@ -38,7 +38,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../../../context/userContext/UserContext"
-import { API } from "../../../../utils/proxy"
+import { API, CDN_URL } from "../../../../utils/proxy"
 
 export const PostCard = ({ post }) => {
   const navigate = useNavigate()
@@ -212,7 +212,7 @@ export const PostCard = ({ post }) => {
       </CardContent>
       <div className="centered-image-container">
         {post.picture.length > 0 && (
-          <img className="centered-image" height="100%" src={`http://localhost:5000/${post.picture[0]}`} alt={post.picture[0]} />
+          <img className="centered-image" height="100%" src={`${CDN_URL}/${post.picture[0]}`} alt={post.picture[0]} />
         )}
       </div>
       <CardActions disableSpacing className="my-0 py-0">

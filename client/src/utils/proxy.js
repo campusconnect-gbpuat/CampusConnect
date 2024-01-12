@@ -1,2 +1,2 @@
-export const API = "http://localhost:5000/api/v1"
-
+export const API = process.env.REACT_APP_BACKEND_API;
+export const CDN_URL = process.env.REACT_APP_CDN_URL;
