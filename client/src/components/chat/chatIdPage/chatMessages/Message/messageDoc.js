@@ -18,7 +18,7 @@ export const MessageDoc = ({ document }) => {
           className={styles.docsImage}
         >
           <img
-            src="https://images.unsplash.com/photo-1682687982468-4584ff11f88a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://firebasestorage.googleapis.com/v0/b/campus-connect-90a41.appspot.com/o/image%2Fpdf%20image.png?alt=media&token=730de48c-8548-4f18-8003-0827b0b97105"
             alt="message_image"
           />
         </a>
