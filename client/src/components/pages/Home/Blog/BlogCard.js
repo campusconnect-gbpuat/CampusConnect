@@ -2,14 +2,14 @@ import {
   faComment,
   faArrowAltCircleUp as faArrowAltCircleUpRegular,
   faBookmark as faBookmarkRegular,
-} from "@fortawesome/free-regular-svg-icons"
-import { faShare } from "@fortawesome/free-solid-svg-icons"
+} from "@fortawesome/free-regular-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
 import {
   faArrowAltCircleUp as faArrowAltCircleUpSolid,
   faBookmark as faBookmarkSolid,
   faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
   Card,
@@ -27,96 +27,96 @@ import {
   Menu,
   MenuItem,
   Typography,
-} from "@material-ui/core"
-import React, { useContext, useEffect, useState } from "react"
-import Moment from "react-moment"
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
-import { AuthContext } from "../../../../context/authContext/authContext"
-import { BlogContext } from "../../../../context/blogContext/BlogContext"
-import { BlogModal } from "../../Modals/BlogModal"
-import { useNavigate } from "react-router-dom"
-import { UserContext } from "../../../../context/userContext/UserContext"
-import { API, CDN_URL } from "../../../../utils/proxy"
+} from "@material-ui/core";
+import React, { useContext, useEffect, useState } from "react";
+import Moment from "react-moment";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import { AuthContext } from "../../../../context/authContext/authContext";
+import { BlogContext } from "../../../../context/blogContext/BlogContext";
+import { BlogModal } from "../../Modals/BlogModal";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../context/userContext/UserContext";
+import { API, CDN_URL } from "../../../../utils/proxy";
 
 export const BlogCard = ({ blog }) => {
-  const navigate = useNavigate()
-  const userContext = useContext(UserContext)
-  const authContext = useContext(AuthContext)
-  const blogContext = useContext(BlogContext)
-  const [vote, setVote] = useState(false)
-  const [comment, setComment] = useState("")
-  const [shareCount, setShareCount] = useState(blog.shareCount)
-  const [countVote, setCountVote] = useState(blog.upvotes.length)
-  const [moreOption, setMoreOption] = useState(null)
+  const navigate = useNavigate();
+  const userContext = useContext(UserContext);
+  const authContext = useContext(AuthContext);
+  const blogContext = useContext(BlogContext);
+  const [vote, setVote] = useState(false);
+  const [comment, setComment] = useState("");
+  const [shareCount, setShareCount] = useState(blog.shareCount);
+  const [countVote, setCountVote] = useState(blog.upvotes.length);
+  const [moreOption, setMoreOption] = useState(null);
   const handleMoreOption = (e) => {
-    setMoreOption(e.currentTarget)
-  }
-  const [bookmarkStatus, setBookmarkStatus] = useState(false)
-  const [sendBtnColor, setSendBtnColor] = useState("grey")
+    setMoreOption(e.currentTarget);
+  };
+  const [bookmarkStatus, setBookmarkStatus] = useState(false);
+  const [sendBtnColor, setSendBtnColor] = useState("grey");
   const handleVote = () => {
     if (!vote) {
-      blogContext.upVoteBlog(blog._id, authContext.user._id)
-      setCountVote(countVote + 1)
-      setVote(true)
+      blogContext.upVoteBlog(blog._id, authContext.user._id);
+      setCountVote(countVote + 1);
+      setVote(true);
     } else {
-      blogContext.downVoteBlog(blog._id, authContext.user._id)
-      setCountVote(countVote - 1)
-      setVote(false)
+      blogContext.downVoteBlog(blog._id, authContext.user._id);
+      setCountVote(countVote - 1);
+      setVote(false);
     }
-  }
+  };
 
   const handleBookmarkBtn = () => {
     const formData = {
       type: blog.objType,
       typeId: blog._id,
-    }
+    };
     if (!bookmarkStatus) {
-      userContext.bookmarkItem(authContext.user._id, formData)
-      setBookmarkStatus(true)
+      userContext.bookmarkItem(authContext.user._id, formData);
+      setBookmarkStatus(true);
     } else {
-      userContext.unBookmarkItem(authContext.user._id, formData)
-      setBookmarkStatus(false)
+      userContext.unBookmarkItem(authContext.user._id, formData);
+      setBookmarkStatus(false);
     }
-  }
+  };
 
-  const open = Boolean(moreOption)
+  const open = Boolean(moreOption);
   const handleClose = () => {
-    setMoreOption(null)
-  }
-  const [showBlog, setShowBlog] = useState(false)
+    setMoreOption(null);
+  };
+  const [showBlog, setShowBlog] = useState(false);
 
   const handleModalBlog = () => {
-    handleClose()
-    setShowBlog(!showBlog)
-  }
-  const [expanded, setExpanded] = React.useState(false)
+    handleClose();
+    setShowBlog(!showBlog);
+  };
+  const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
+    setExpanded(!expanded);
+  };
 
   const handleCommentSend = async () => {
     if (comment.length > 0) {
-      await blogContext.addComment(blog._id, authContext.user._id, comment)
+      await blogContext.addComment(blog._id, authContext.user._id, comment);
     }
-  }
+  };
 
   const handleShareBtn = async () => {
-    const response = await blogContext.countShare(blog._id)
-    setShareCount(response.shareCount)
-    console.log(response)
-  }
+    const response = await blogContext.countShare(blog._id);
+    setShareCount(response.shareCount);
+    console.log(response);
+  };
 
   useEffect(() => {
     blog.upvotes.filter((likeId) => {
       if (likeId === authContext.user._id) {
-        setVote(true)
+        setVote(true);
       } else {
-        setVote(false)
+        setVote(false);
       }
-      return 0
-    })
-  }, [authContext.user._id, blog.upvotes])
+      return 0;
+    });
+  }, [authContext.user._id, blog.upvotes]);
 
   useEffect(() => {
     if (!userContext.loading) {
@@ -124,24 +124,22 @@ export const BlogCard = ({ blog }) => {
 
       userContext.user.bookmark.blog.map((item) => {
         if (item._id === blog._id) {
-          setBookmarkStatus(true)
+          setBookmarkStatus(true);
         } else {
-          setBookmarkStatus(false)
+          setBookmarkStatus(false);
         }
-        return 0
-      })
+        return 0;
+      });
     }
-  }, [blog._id, userContext.loading, userContext.user.bookmark.blog])
+  }, [blog._id, userContext.loading, userContext.user.bookmark.blog]);
 
   const styleTheme =
     authContext.theme === "dark"
       ? { background: "#121212", color: "whitesmoke" }
-      : { background: "white", color: "black" }
+      : { background: "white", color: "black" };
 
   const clickStyleTheme =
-    authContext.theme === "dark"
-      ? { color: "#03DAC6" }
-      : { color: "blue" }
+    authContext.theme === "dark" ? { color: "#03DAC6" } : { color: "blue" };
 
   return (
     <>
@@ -154,7 +152,12 @@ export const BlogCard = ({ blog }) => {
           blog={blog}
         />
       )}
-      <Card variant="elevation" elevation={3} className="mb-3" style={styleTheme}>
+      <Card
+        variant="elevation"
+        elevation={3}
+        className="mb-3"
+        style={styleTheme}
+      >
         <CardHeader
           className="pt-3 pb-0"
           avatar={
@@ -165,7 +168,11 @@ export const BlogCard = ({ blog }) => {
           }
           action={
             <>
-              <IconButton aria-label="settings" onClick={handleMoreOption} style={styleTheme}>
+              <IconButton
+                aria-label="settings"
+                onClick={handleMoreOption}
+                style={styleTheme}
+              >
                 <MoreHorizIcon />
               </IconButton>
               <Menu
@@ -175,26 +182,36 @@ export const BlogCard = ({ blog }) => {
                 open={open}
                 onClose={handleClose}
                 TransitionComponent={Fade}
-                PaperProps={{ style: { backgroundColor: styleTheme.background } }}
+                PaperProps={{
+                  style: { backgroundColor: styleTheme.background },
+                }}
               >
                 {authContext.user._id === blog.user._id ? (
-                  <MenuItem onClick={handleModalBlog} style={styleTheme}>Edit</MenuItem>
+                  <MenuItem onClick={handleModalBlog} style={styleTheme}>
+                    Edit
+                  </MenuItem>
                 ) : null}
                 {authContext.user._id === blog.user._id ? (
                   <MenuItem
                     onClick={() => {
-                      blogContext.deleteBlog(authContext.user._id, blog._id)
-                      handleClose()
+                      blogContext.deleteBlog(authContext.user._id, blog._id);
+                      handleClose();
                     }}
                     style={styleTheme}
                   >
                     Delete
                   </MenuItem>
                 ) : null}
-                <MenuItem onClick={handleClose} style={styleTheme}>Share</MenuItem>
-                <MenuItem onClick={handleClose} style={styleTheme}>Bookmark</MenuItem>
+                <MenuItem onClick={handleClose} style={styleTheme}>
+                  Share
+                </MenuItem>
+                <MenuItem onClick={handleClose} style={styleTheme}>
+                  Bookmark
+                </MenuItem>
 
-                <MenuItem onClick={handleClose} style={styleTheme}>Report blog</MenuItem>
+                <MenuItem onClick={handleClose} style={styleTheme}>
+                  Report blog
+                </MenuItem>
               </Menu>
             </>
           }
@@ -202,13 +219,17 @@ export const BlogCard = ({ blog }) => {
             <b
               style={{ cursor: "pointer" }}
               onClick={() => {
-                navigate(`/profile/${blog.user._id}`)
+                navigate(`/profile/${blog.user._id}`);
               }}
             >
               {blog.user.name}
             </b>
           }
-          subheader={<Moment style={styleTheme} fromNow>{blog.createdAt}</Moment>}
+          subheader={
+            <Moment style={styleTheme} fromNow>
+              {blog.createdAt}
+            </Moment>
+          }
         />
 
         <CardContent>
@@ -221,7 +242,12 @@ export const BlogCard = ({ blog }) => {
         </CardContent>
         <div className="centered-image-container">
           {blog.picture && (
-            <img className="centered-image" height="100%" src={`${CDN_URL}/${blog.picture}`} alt={blog.picture} />
+            <img
+              className="centered-image"
+              height="100%"
+              src={`https://backend-campus-connect.onrender.com/${blog.picture}`}
+              alt={blog.picture}
+            />
           )}
         </div>
         <CardActions disableSpacing>
@@ -234,7 +260,10 @@ export const BlogCard = ({ blog }) => {
                     color="#03DAC6"
                   />
                 ) : (
-                  <FontAwesomeIcon icon={faArrowAltCircleUpRegular} style={styleTheme} />
+                  <FontAwesomeIcon
+                    icon={faArrowAltCircleUpRegular}
+                    style={styleTheme}
+                  />
                 )}
               </IconButton>
               <span>
@@ -280,7 +309,7 @@ export const BlogCard = ({ blog }) => {
                         {comment.text}
                       </Typography>
                     </span>
-                  )
+                  );
                 })}
               </Grid>
               <Grid item>
@@ -291,13 +320,13 @@ export const BlogCard = ({ blog }) => {
                     style={styleTheme}
                     onChange={(e) => {
                       if (e.target.value === "") {
-                        setSendBtnColor("grey")
-                        console.log(e.target.value)
+                        setSendBtnColor("grey");
+                        console.log(e.target.value);
                       } else {
-                        setSendBtnColor(clickStyleTheme.color)
-                        console.log(e.target.value)
+                        setSendBtnColor(clickStyleTheme.color);
+                        console.log(e.target.value);
                       }
-                      setComment(e.target.value)
+                      setComment(e.target.value);
                     }}
                     endAdornment={
                       <InputAdornment position="end">
@@ -318,5 +347,5 @@ export const BlogCard = ({ blog }) => {
         </Collapse>
       </Card>
     </>
-  )
-}
+  );
+};

@@ -225,7 +225,7 @@ export const PostCard = ({ post }) => {
           <img
             className="centered-image"
             height="100%"
-            src={`${CDN_URL}/${post.picture[0]}`}
+            src={`https://backend-campus-connect.onrender.com/${post.picture[0]}`}
             alt={post.picture[0]}
           />
         )}
