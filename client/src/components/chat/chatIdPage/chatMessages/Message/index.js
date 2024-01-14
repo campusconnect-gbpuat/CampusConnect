@@ -10,7 +10,8 @@ import { ModalContext } from "../../../../../context/modalContext";
 import { ModalType } from "../../../../../context/modalContext/modalTypes";
 import { AuthContext } from "../../../../../context/authContext/authContext";
 import { MessageDeleted } from "./messageDeleted";
-
+import moment from "moment";
+import "moment-timezone";
 const MessageComponent = {
   image: MessageImage,
   text: MessageText,
@@ -49,6 +50,15 @@ export const Message = ({ me, userData, message }) => {
   // console.log(isMessageDeletedForMe, isMessageDeletedForEveryone);
   const isMessageDeletedByme = message.deletedFor.includes(message.senderId);
   const isOwnerofMessage = message.senderId === authContext.user._id;
+
+  // Convert to JavaScript Date object
+  const date = new Date(
+    message?.date?.seconds * 1000 + message?.date?.nanoseconds / 1e6
+  );
+
+  // Format the date in Indian date format using Moment.js
+  const formattedTime = moment(date).format("HH:mma");
+
   return (
     <div
       ref={scrollRef}
@@ -116,7 +126,7 @@ export const Message = ({ me, userData, message }) => {
         </div>
         <div className={styles.time}>
           {/* time  */}
-          <span>9:30am</span>
+          <span>{formattedTime}</span>
         </div>
       </div>
     </div>

@@ -5,6 +5,9 @@ import { useGetUserData } from "../../../hooks/useGetUserData";
 import { AuthContext } from "../../../context/authContext/authContext";
 import ImageIcon from "@material-ui/icons/ImageOutlined";
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
+
+import moment from "moment";
+
 const SidebarItem = ({ chat }) => {
   const { setTalkingWithId, setChatId, chatId, setChatWallpaper } =
     useContext(ChatContext);
@@ -71,6 +74,14 @@ const SidebarItem = ({ chat }) => {
     );
   };
 
+  // Convert to JavaScript Date object
+  const date = new Date(
+    chat?.date?.seconds * 1000 + chat?.date?.nanoseconds / 1e6
+  );
+
+  // Format the date in Indian date format using Moment.js
+  const formattedTime = moment(date).format("HH:mma");
+
   return (
     <div
       className={
@@ -96,7 +107,7 @@ const SidebarItem = ({ chat }) => {
         <div className={styles.SidebarRightTop}>
           {/* right top */}
           <p>{`${userData?.name}`}</p>
-          <span>9:30am</span>
+          <span>{formattedTime}</span>
         </div>
         <div className={styles.SidebarRightBottom}>
           {/* right bottom */}
