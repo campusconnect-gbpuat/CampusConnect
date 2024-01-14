@@ -225,7 +225,7 @@ export const PostCard = ({ post }) => {
           <img
             className="centered-image"
             height="100%"
-            src={`https://backend-campus-connect.onrender.com/${post.picture[0]}`}
+            src={`https://www.audiolounge.me/${post.picture[0]}`}
             alt={post.picture[0]}
           />
         )}
