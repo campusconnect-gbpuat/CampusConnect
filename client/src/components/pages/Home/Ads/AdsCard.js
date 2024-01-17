@@ -141,7 +141,7 @@ export const AdsCard = ({ ads }) => {
             <img
               className="centered-image"
               height="100%"
-              src={`https://www.audiolounge.me/${ads.picture[0]}`}
+              src={`https://campusconnect-cp84.onrender.com/${ads.picture[0]}`}
               alt={ads.picture[0]}
             />
           )}

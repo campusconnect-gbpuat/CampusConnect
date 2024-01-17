@@ -245,7 +245,7 @@ export const BlogCard = ({ blog }) => {
             <img
               className="centered-image"
               height="100%"
-              src={`https://www.audiolounge.me/${blog.picture}`}
+              src={`https://campusconnect-cp84.onrender.com/${blog.picture}`}
               alt={blog.picture}
             />
           )}
