@@ -163,7 +163,7 @@ const Header = () => {
                   <IconButton>
                     <FontAwesomeIcon
                       icon={faComment}
-                      style={currentTab(location, "/chat")}
+                      style={currentTab(location, "/chats")}
                     />
                   </IconButton>
                 </Link>

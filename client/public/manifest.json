@@ -1,6 +1,6 @@
 {
   "short_name": "CampusConnect",
-  "name": "CampusConnect Application",
+  "name": "CampusConnect",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,13 +13,36 @@
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "cc_logo.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "2000x1496"
+    },
+    {
+      "src": "cc_logo_horizontal_white.png",
+      "type": "image/png",
+      "sizes": "2000x449"
+    },
+    {
+      "src": "cc_logo_horizontal.png",
+      "type": "image/png",
+      "sizes": "2000x449"
+    },
+    {
+      "src": "cc_logo_mobile_white.png",
+      "type": "image/png",
+      "sizes": "450x446"
+    },
+    {
+      "src": "cc_logo_mobile.png",
+      "type": "image/png",
+      "sizes": "448x444"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "scope": "/",
+  "description": "A platform for students and faculty to connect, share, and engage with their campus community.",
+  "orientation": "portrait-primary"
 }
