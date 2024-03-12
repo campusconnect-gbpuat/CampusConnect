@@ -2,8 +2,11 @@ import { Box, Button, Grid, Paper, TextField } from "@material-ui/core"
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/authContext/authContext"
+import { requestFirebaseNotificationPermission, sendNotificationToUser } from "../../utils/notification"
+import { useServiceWorker } from "../../context/ServiceWorkerContext";
 import "./Login.css"
 export const Login = () => {
+  const { isReady } = useServiceWorker()
   const navigate = useNavigate()
   const authContext = useContext(AuthContext)
   const [inputValues, setInputValues] = useState({
@@ -25,8 +28,27 @@ export const Login = () => {
   }
   const handleFormSubmit = async (e) => {
     e.preventDefault()
+    await authContext.signinUser(formData).then(() => {
+      console.log(authContext.isLoggedIn)
+    })
 
-    await authContext.signinUser(formData)
+    if (!authContext.isLoggedIn) {
+      if (isReady) {
+        await requestFirebaseNotificationPermission()
+        .then((token) => {
+          console.log("FCM Token:", token);
+          // testing
+          sendNotificationToUser("Welcome", "Welcome to CampusConnect", token);
+        })
+        .catch((error) => {
+          console.error("Error requesting notification permission:", error);
+        });
+      } else {
+        console.log('Service Worker not ready');
+      }
+    } else {
+      console.log("Login was not successful.");
+    }
   }
 
   return (

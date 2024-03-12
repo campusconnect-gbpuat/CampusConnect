@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import "./App.css";
 import { Routing } from "./components/common/Routing";
 import { AdsState } from "./context/adsContext/AdsState";
@@ -11,14 +11,21 @@ import { PollState } from "./context/pollContext/PollState";
 import { PostState } from "./context/postContext/PostState";
 import { UserState } from "./context/userContext/UserState";
 import { JobState } from "./context/jobContext/JobState";
+import { ServiceWorkerProvider } from "./context/ServiceWorkerContext";
 import { FirebaseContextProvider } from "./context/firebaseContext";
 import { ChatContextProvider } from "./context/chatContext/chatContext";
 import ModalProvider from "./components/Providers/modal-provider";
 import { ModalContextProvider } from "./context/modalContext";
+import setFirebaseMessaging from "./utils/firebaseMessaging";
 
 export const App = () => {
+  useEffect(() => {
+    setFirebaseMessaging();
+  }, []);
+
   return (
-    <FirebaseContextProvider>
+    <ServiceWorkerProvider>
+     <FirebaseContextProvider>
       <ChatContextProvider>
         <AuthState>
           <ModalContextProvider>
@@ -45,6 +52,7 @@ export const App = () => {
           </ModalContextProvider>
         </AuthState>
       </ChatContextProvider>
-    </FirebaseContextProvider>
+     </FirebaseContextProvider>
+    </ServiceWorkerProvider>
   );
 };
