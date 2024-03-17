@@ -28,9 +28,7 @@ export const Login = () => {
   }
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-    await authContext.signinUser(formData).then(() => {
-      console.log(authContext.isLoggedIn)
-    })
+    await authContext.signinUser(formData)
 
     if (!authContext.isLoggedIn) {
       if (isReady) {

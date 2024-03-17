@@ -3,26 +3,17 @@ import { messaging } from "./config/firebase";
 import { API } from "./proxy"
 import axios from "axios"
 
-export const checkUserPermissionStatus = async () => {
-  return localStorage.getItem('hasAskedForNotifications') === 'true';
-};
-
-export const updateUserPermissionStatus = (hasGranted) => {
-  localStorage.setItem('hasAskedForNotifications', 'true');
-};
-
 export const requestFirebaseNotificationPermission = async () => { 
-  const isPermissionGranted = await checkUserPermissionStatus();
+  const permission = Notification.permission;
 
-  if (!isPermissionGranted) {
+  if (permission === "default") {
     return await Notification.requestPermission()
-      .then((permission) => {
-        if (permission === 'granted') {
+      .then((selectedPermission) => {
+        if (selectedPermission === 'granted') {
           console.log('Notification permission granted.');
-          console.log(process.env.REACT_APP_FIREBASE_VAPID_KEY);
-          updateUserPermissionStatus(true);
           return getToken(messaging, { vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY });
         } else {
+          alert("You have disabled notifications. You can change this in the settings to receive notifications.");
           throw new Error('User did not grant permission.');
         }
       })
@@ -34,7 +25,7 @@ export const requestFirebaseNotificationPermission = async () => {
         console.error('An error occurred while getting the token:', err);
         throw err;
       });
-  } else {
+  } else if (permission === "granted") {
     console.log('Notification permission already granted.');
     const currentToken = await getToken(messaging);
     if (currentToken) {
@@ -43,6 +34,8 @@ export const requestFirebaseNotificationPermission = async () => {
     } else {
       return getToken(messaging, { vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY });
     }
+  } else {
+    alert("You have disabled notifications. You can change this in the settings to receive notifications.");
   }
 };
 

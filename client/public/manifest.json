@@ -36,6 +36,11 @@
       "src": "cc_logo_mobile.png",
       "type": "image/png",
       "sizes": "448x444"
+    },
+    {
+      "src": "cc_notification_logo.png",
+      "type": "image/png",
+      "sizes": "440x440"
     }
   ],
   "start_url": ".",

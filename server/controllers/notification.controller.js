@@ -5,7 +5,7 @@ const sendNotification = (req, res) => {
   const message = {
     notification: {
       title: notificationTitle,
-      image: "https://campusconnect-ten.vercel.app/cc_logo_mobile.png",
+      image: "https://campusconnect-ten.vercel.app/cc_notification_logo.png",
       body: notificationBody,
     },
     token: registrationToken,
