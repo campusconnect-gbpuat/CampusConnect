@@ -32,25 +32,39 @@ export const requestFirebaseNotificationPermission = async () => {
       console.log('FCM Token:', currentToken);
       return currentToken;
     } else {
-      return getToken(messaging, { vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY });
+      return await getToken(messaging, { vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY });
     }
   } else {
     alert("You have disabled notifications. You can change this in the settings to receive notifications.");
   }
 };
 
-export const sendNotificationToUser = async (title, body, token) => {
+export const sendNotificationToUser = async (title, body, topic) => {
   try {
     const notificationData = {
       notificationTitle: title,
       notificationBody: body,
-      registrationToken: token,
+      registrationTopic: topic,
     };
 
     const response = await axios.post(`${API}/send-notification`, notificationData);
     console.log('Notification sent successfully:', response.data);
   } catch (error) {
     console.error('Error sending notification:', error.response ? error.response.data : error.message);
+  }
+};
+
+export const subscribeUserToTopic = async (token, topic) => {
+  try {
+    const data = {
+      notificationToken: token,
+      notificationTopic: topic,
+    };
+
+    const response = await axios.post(`${API}/subscribe-to-topic`, data);
+    console.log('Subscribed successfully:', response.data);
+  } catch (error) {
+    console.error('Error', error.response ? error.response.data : error.message);
   }
 };
       

@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
 import { Form, Modal } from "react-bootstrap"
+import { sendNotificationToUser } from "../../../utils/notification"
 
 export const BlogModal = ({
   show,
@@ -29,6 +30,7 @@ export const BlogModal = ({
     blog
       ? blogFunction(formData, authContext.user._id, blog._id)
       : blogFunction(formData, authContext.user._id)
+    sendNotificationToUser("New Blog", `${authContext.user.name} created a new blog`, authContext.user._id);
     handleModal()
   }
   const styleTheme =

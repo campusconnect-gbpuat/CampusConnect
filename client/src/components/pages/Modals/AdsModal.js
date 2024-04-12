@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react"
 import { Form, Modal } from "react-bootstrap"
 import { AuthContext } from "../../../context/authContext/authContext"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
+import { sendNotificationToUser } from "../../../utils/notification"
 
 export const AdsModal = ({
   show,
@@ -33,6 +34,7 @@ export const AdsModal = ({
     ads
       ? adsFunction(formData, authContext.user._id, ads._id)
       : adsFunction(formData, authContext.user._id)
+    sendNotificationToUser("New Ad", `${authContext.user.name} posted a new ad`, authContext.user._id);
     handleModal()
   }
   const styleTheme =

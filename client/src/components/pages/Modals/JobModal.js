@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import React, { useContext, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import { Modal } from "react-bootstrap"
+import { sendNotificationToUser } from "../../../utils/notification"
 
 export const JobModal = ({
     show,
@@ -26,6 +27,7 @@ export const JobModal = ({
         job
             ? jobFunction({ workTitle, company, eligibility, skillsReq, workLocation, salary, applyBy, link }, authContext.user._id, job._id)
             : jobFunction({ workTitle, company, eligibility, skillsReq, workLocation, salary, applyBy, link }, authContext.user._id)
+        sendNotificationToUser("New Job Opportunity Available", "Explore the latest job listing now", "campus");
         handleModal()
     }
     const styleTheme =

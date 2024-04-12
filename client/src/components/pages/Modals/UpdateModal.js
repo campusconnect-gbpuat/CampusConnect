@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import React, { useContext, useState } from "react"
 import { AuthContext } from "../../../context/authContext/authContext"
 import { Modal } from "react-bootstrap"
+import { sendNotificationToUser } from "../../../utils/notification"
 
 export const UpdateModal = ({
     show,
@@ -19,6 +20,7 @@ export const UpdateModal = ({
         update
             ? updateFunction({ description }, authContext.user._id, update._id)
             : updateFunction({ description }, authContext.user._id)
+        sendNotificationToUser("Site Update Alert", "Explore the new features and enhancements", "campus");
         handleModal()
     }
     const styleTheme =

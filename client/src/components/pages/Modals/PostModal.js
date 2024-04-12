@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react"
 import { Modal, Form } from "react-bootstrap"
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate"
 import { AuthContext } from "../../../context/authContext/authContext"
+import { sendNotificationToUser } from "../../../utils/notification"
 
 export const PostModal = ({
   show,
@@ -28,6 +29,8 @@ export const PostModal = ({
     post
       ? postFunction(formData, authContext.user._id, post._id)
       : postFunction(formData, authContext.user._id)
+    // console.log(authContext.user._id);
+    sendNotificationToUser("New Post", `${authContext.user.name} created a new post`, authContext.user._id);
     handleModal()
   }
   const styleTheme =
