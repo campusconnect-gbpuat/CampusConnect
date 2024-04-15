@@ -21,6 +21,7 @@ import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy";
 import { Bookmarks } from "../pages/Home/Bookmarks/Bookmarks";
 import { Notice } from "../pages/Home/Notice/Notice";
 import { Events } from "../pages/Home/Events/Events";
+import { Streams } from "../pages/Home/Streams/Streams";
 import { SimpleRoute } from "../auth/SimpleRoute";
 import { PrivateRoute } from "../auth/PrivateRoute";
 import { Feedback } from "../pages/Feedback/Feedback";
@@ -203,6 +204,10 @@ export const Routing = () => {
             <Route
               path="/events"
               element={<PrivateRoute component={Events} />}
+            />
+            <Route
+              path="/live-streams"
+              element={<PrivateRoute component={Streams} />}
             />
             <Route
               path="/notices"

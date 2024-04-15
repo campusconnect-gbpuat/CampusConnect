@@ -67,4 +67,18 @@ export const subscribeUserToTopic = async (token, topic) => {
     console.error('Error', error.response ? error.response.data : error.message);
   }
 };
+
+export const unsubscribeUserFromTopic = async (token, topic) => {
+  try {
+    const data = {
+      notificationToken: token,
+      notificationTopic: topic,
+    };
+
+    const response = await axios.post(`${API}/unsubscribe-from-topic`, data);
+    console.log('Unsubscribed successfully:', response.data);
+  } catch (error) {
+    console.error('Error', error.response ? error.response.data : error.message);
+  }
+};
       

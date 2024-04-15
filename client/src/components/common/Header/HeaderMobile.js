@@ -212,6 +212,14 @@ const HeaderMobile = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  navigate("/live-streams");
+                }}
+                style={styleTheme}
+              >
+                Live Streams
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
                   navigate("/notices");
                 }}
                 style={styleTheme}

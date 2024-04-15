@@ -4,7 +4,7 @@ import { AuthContext } from "../../../context/authContext/authContext"
 import BrokenImageIcon from "@material-ui/icons/BrokenImage"
 import PollIcon from "@material-ui/icons/Poll"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEdit, faFeather, faGraduationCap, faStickyNote, faCalendarAlt } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faFeather, faGraduationCap, faStickyNote, faCalendarAlt, faChalkboard } from "@fortawesome/free-solid-svg-icons"
 import { PostModal } from "../Modals/PostModal"
 import { PostContext } from "../../../context/postContext/postContext"
 import { BlogModal } from "../Modals/BlogModal"
@@ -12,11 +12,13 @@ import { BlogContext } from "../../../context/blogContext/BlogContext"
 import { PollModal } from "../Modals/PollModal"
 import { NoticeModal } from "../Modals/NoticeModal"
 import { EventModal } from "../Modals/EventModal"
+import { StreamModal } from "../Modals/StreamModal"
 import { API } from "../../../utils/proxy"
 import { PollContext } from "../../../context/pollContext/PollContext"
 import { AdsContext } from "../../../context/adsContext/AdsContext"
 import { NoticeContext } from "../../../context/noticeContext/NoticeContext"
 import { EventContext } from "../../../context/eventContext/EventContext"
+import { StreamContext } from "../../../context/streamContext/StreamContext"
 import { JobContext } from "../../../context/jobContext/JobContext"
 import { JobModal } from "../Modals/JobModal"
 import { AdsModal } from "../Modals/AdsModal"
@@ -29,6 +31,7 @@ export const InputBox = () => {
   const adsContext = useContext(AdsContext)
   const noticeContext = useContext(NoticeContext)
   const eventContext = useContext(EventContext)
+  const streamContext = useContext(StreamContext)
   const jobContext = useContext(JobContext)
   const [showPost, setShowPost] = useState(false)
   const [showBlog, setShowBlog] = useState(false)
@@ -36,6 +39,7 @@ export const InputBox = () => {
   const [showAds, setShowAds] = useState(false)
   const [showNotices, setShowNotices] = useState(false)
   const [showEvents, setShowEvents] = useState(false)
+  const [showStreams, setShowStreams] = useState(false)
   const [showJobs, setShowJobs] = useState(false)
 
   const handleModalPoll = () => {
@@ -46,6 +50,9 @@ export const InputBox = () => {
   }
   const handleEvents = () => {
     setShowEvents(!showEvents)
+  }
+  const handleStreams = () => {
+    setShowStreams(!showStreams)
   }
   const handleModalJob = () => {
     setShowJobs(!showJobs)
@@ -122,6 +129,15 @@ export const InputBox = () => {
           eventFunction={eventContext.createEvent}
           event={undefined}
           handleModal={handleEvents}
+        />
+      )}
+      {showStreams && (
+        <StreamModal
+          modalTitle="Create Live Stream"
+          show={showStreams}
+          streamFunction={streamContext.createStream}
+          stream={undefined}
+          handleModal={handleStreams}
         />
       )}
       {showJobs && (
@@ -211,6 +227,13 @@ export const InputBox = () => {
             <Grid item>
               <Button onClick={handleEvents} startIcon={<FontAwesomeIcon icon={faCalendarAlt} />} style={styleTheme}>
                 Add Event
+              </Button>
+            </Grid>
+          )}
+          {authContext.user.role === 2 && (
+            <Grid item>
+              <Button onClick={handleStreams} startIcon={<FontAwesomeIcon icon={faChalkboard} />} style={styleTheme}>
+                Add Live Stream
               </Button>
             </Grid>
           )}

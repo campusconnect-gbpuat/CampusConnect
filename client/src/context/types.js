@@ -48,6 +48,13 @@ export const EVENT_GET = "event_get"
 export const EVENT_CREATE = "event_create"
 export const EVENT_SUCCESS = "event_success"
 
+//Live Streams
+export const STREAM_LOADING = "stream_loading"
+export const STREAM_ERROR = "stream_error"
+export const STREAM_GET = "stream_get"
+export const STREAM_CREATE = "stream_create"
+export const STREAM_SUCCESS = "stream_success"
+
 //Jobs
 export const JOB_LOADING = "job_loading"
 export const JOB_ERROR = "job_error"

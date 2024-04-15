@@ -24,6 +24,8 @@ import {
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import { FeedbackModal } from "../../pages/Modals/FeedbackModal";
+import { UserContext } from "../../../context/userContext/UserContext";
+import { requestFirebaseNotificationPermission, unsubscribeUserFromTopic } from "../../../utils/notification";
 
 const currentTab = (location, path) => {
   if (location.pathname === path) {
@@ -35,6 +37,7 @@ const currentTab = (location, path) => {
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const userContext = useContext(UserContext);
   const authContext = useContext(AuthContext);
   const [showFeedback, setShowFeedback] = useState(false);
   const [moreOption, setMoreOption] = useState(null);
@@ -235,6 +238,26 @@ const Header = () => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
+                  if(Notification.permission === "granted"){
+                    userContext.getUserById(authContext.user._id);
+                    requestFirebaseNotificationPermission().then((token) => {
+                      if(authContext.user.role !== 2){
+                        unsubscribeUserFromTopic(token, "campus").catch((error) => {
+                          console.error("Unsubscription error: ", error);
+                        });
+                      }
+                      userContext.user.friendList.forEach((friend) => {
+                        let topic = friend._id;
+                        unsubscribeUserFromTopic(token, topic).then(() => {
+                          console.log("Unsubscribed");
+                        }).catch((error) => {
+                          console.error("Unsubscription error: ", error);
+                        });
+                      });
+                    }).catch((error) => {
+                      console.error("Error requesting notification permission: ", error);
+                    });
+                  }
                   authContext.signoutUser();
                 }}
                 style={styleTheme}

@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStickyNote } from "@fortawesome/free-solid-svg-icons"
 import BookmarksRoundedIcon from "@material-ui/icons/BookmarksRounded"
 import EventNoteRoundedIcon from "@material-ui/icons/EventNoteRounded"
+import LiveTvIcon from "@material-ui/icons/LiveTv"
 import { useNavigate } from "react-router-dom"
 import { API } from "../../../utils/proxy"
 
@@ -93,6 +94,19 @@ export const HomeSideBar = () => {
             </ListItemIcon>
             <ListItemText
               primary={<Typography variant="button">Events</Typography>}
+            />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              navigate("/live-streams")
+            }}
+          >
+            <ListItemIcon style={styleTheme}>
+              <LiveTvIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={<Typography variant="button">Live Streams</Typography>}
             />
           </ListItem>
           <ListItem

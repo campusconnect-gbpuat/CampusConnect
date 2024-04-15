@@ -11,6 +11,7 @@ import { PollState } from "./context/pollContext/PollState";
 import { PostState } from "./context/postContext/PostState";
 import { UserState } from "./context/userContext/UserState";
 import { JobState } from "./context/jobContext/JobState";
+import { StreamState } from './context/streamContext/StreamState';
 import { ServiceWorkerProvider } from "./context/ServiceWorkerContext";
 import { FirebaseContextProvider } from "./context/firebaseContext";
 import { ChatContextProvider } from "./context/chatContext/chatContext";
@@ -25,34 +26,36 @@ export const App = () => {
 
   return (
     <ServiceWorkerProvider>
-     <FirebaseContextProvider>
-      <ChatContextProvider>
-        <AuthState>
-          <ModalContextProvider>
-            <ModalProvider />
-            <UserState>
-              <PollState>
-                <PostState>
-                  <BlogState>
-                    <AdsState>
-                      <EventState>
-                        <JobState>
-                          <UpdateState>
-                            <NoticeState>
-                              <Routing />
-                            </NoticeState>
-                          </UpdateState>
-                        </JobState>
-                      </EventState>
-                    </AdsState>
-                  </BlogState>
-                </PostState>
-              </PollState>
-            </UserState>
-          </ModalContextProvider>
-        </AuthState>
-      </ChatContextProvider>
-     </FirebaseContextProvider>
+      <FirebaseContextProvider>
+        <ChatContextProvider>
+          <AuthState>
+            <ModalContextProvider>
+              <ModalProvider />
+                <UserState>
+                  <PollState>
+                    <PostState>
+                      <BlogState>
+                        <AdsState>
+                          <EventState>
+                            <StreamState>
+                              <JobState>
+                                <UpdateState>
+                                  <NoticeState>
+                                    <Routing />
+                                  </NoticeState>
+                                </UpdateState>
+                              </JobState>
+                            </StreamState>
+                          </EventState>
+                        </AdsState>
+                      </BlogState>
+                    </PostState>
+                  </PollState>
+                </UserState>
+            </ModalContextProvider>
+          </AuthState>
+        </ChatContextProvider>
+      </FirebaseContextProvider>
     </ServiceWorkerProvider>
   );
 };

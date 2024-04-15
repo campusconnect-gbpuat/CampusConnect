@@ -36,4 +36,16 @@ const subscribeToTopic = (req, res) => {
     });
 };
 
-module.exports = { sendNotification, subscribeToTopic };
+const unsubscribeFromTopic = (req, res) => {
+  const { notificationToken, notificationTopic } = req.body;
+
+  messaging.unsubscribeFromTopic(notificationToken, notificationTopic)
+  .then((response) => {
+    console.log('Successfully unsubscribed from topic:', response);
+  })
+  .catch((error) => {
+    console.log('Error unsubscribing from topic:', error);
+  });
+};
+
+module.exports = { sendNotification, subscribeToTopic, unsubscribeFromTopic };
