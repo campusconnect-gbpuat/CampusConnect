@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Header.css";
 import {
   AppBar,
@@ -41,6 +41,10 @@ const Header = () => {
   const authContext = useContext(AuthContext);
   const [showFeedback, setShowFeedback] = useState(false);
   const [moreOption, setMoreOption] = useState(null);
+  useEffect(() => {
+    userContext.getUserById(authContext.user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authContext.user._id]);
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget);
   };
@@ -239,7 +243,6 @@ const Header = () => {
               <MenuItem
                 onClick={() => {
                   if(Notification.permission === "granted"){
-                    userContext.getUserById(authContext.user._id);
                     requestFirebaseNotificationPermission().then((token) => {
                       if(authContext.user.role !== 2){
                         unsubscribeUserFromTopic(token, "campus").catch((error) => {
@@ -248,6 +251,7 @@ const Header = () => {
                       }
                       userContext.user.friendList.forEach((friend) => {
                         let topic = friend._id;
+                        console.log(topic);
                         unsubscribeUserFromTopic(token, topic).then(() => {
                           console.log("Unsubscribed");
                         }).catch((error) => {
@@ -255,7 +259,7 @@ const Header = () => {
                         });
                       });
                     }).catch((error) => {
-                      console.error("Error requesting notification permission: ", error);
+                      console.log("Error requesting notification permission: ", error);
                     });
                   }
                   authContext.signoutUser();

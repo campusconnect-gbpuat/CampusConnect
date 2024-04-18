@@ -25,6 +25,7 @@ router.post(
 	"/create/stream",
 	isSignedIn,
 	isAuthenticated,
+	upload.array("picture", 10),
 	isAdmin,
 	createStream
 );
@@ -41,7 +42,7 @@ router.put(
 	isSignedIn,
 	isAuthenticated,
 	isAdmin,
-	upload.single("picture"),
+	upload.array("picture", 10),
 	updateStream
 );
 

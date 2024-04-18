@@ -70,15 +70,18 @@ export const subscribeUserToTopic = async (token, topic) => {
 
 export const unsubscribeUserFromTopic = async (token, topic) => {
   try {
-    const data = {
-      notificationToken: token,
-      notificationTopic: topic,
-    };
+    const data = JSON.stringify({ token, topic });
 
-    const response = await axios.post(`${API}/unsubscribe-from-topic`, data);
+    const response = await axios.post(`${API}/unsubscribe-from-topic`, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
     console.log('Unsubscribed successfully:', response.data);
   } catch (error) {
     console.error('Error', error.response ? error.response.data : error.message);
   }
 };
+
       
