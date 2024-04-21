@@ -18,7 +18,7 @@ export default (state, action) => {
       }
     case EVENT_LOADING:
       return {
-        state,
+        ...state,
         error: "",
         loading: action.payload,
       }

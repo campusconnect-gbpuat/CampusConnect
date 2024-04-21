@@ -6,6 +6,10 @@
   height: 100vh;
 }
 
+#demo {
+  margin-top: 20px;
+}
+
 #home-center-wrapper .notice-card {
   display: none;
 }
@@ -31,6 +35,10 @@
 }
 
 #home-center-wrapper .poll-card {
+  display: none;
+}
+
+#home-center-wrapper .demo {
   display: none;
 }
 
@@ -85,6 +93,10 @@
     padding: 0 15px;
   }
 
+  #demo {
+    display: none;
+  }
+
   .home-right-bar,
   .friends-tab,
   .bookmark-wrapper {
@@ -126,4 +138,13 @@
   #home-center-wrapper .poll-card {
     display: block;
   }
+
+  #home-center-wrapper .demo {
+    display: block;
+  }
+}
+
+.center-dot {
+  vertical-align: middle; 
+  margin: 0 5px;
 }

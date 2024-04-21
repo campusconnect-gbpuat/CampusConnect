@@ -6,7 +6,7 @@ export default (state, action) => {
     case STREAM_GET:
       return {
         ...state,
-        event: action.payload,
+        stream: action.payload,
         loading: false,
         error: "",
       }
@@ -18,7 +18,7 @@ export default (state, action) => {
       }
     case STREAM_LOADING:
       return {
-        state,
+        ...state,
         error: "",
         loading: action.payload,
       }

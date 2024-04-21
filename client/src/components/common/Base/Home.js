@@ -13,6 +13,8 @@ import "./Home.css"
 import { requestFirebaseNotificationPermission, subscribeUserToTopic } from "../../../utils/notification"
 import { PollCard } from "../../pages/Home/Poll/PollCard"
 import { UpdateCard } from "../../pages/Home/Update/UpdateCard"
+import DemoAd from "./Ad"
+import DemoAdMobile from "./AdMobile"
 
 export const Home = ({ children }) => {
   const userContext = useContext(UserContext)
@@ -51,11 +53,15 @@ export const Home = ({ children }) => {
         <Grid container spacing={3} justifyContent="center">
           <Grid item md={3}>
             <HomeSideBar />
+            <div id="demo">
+              <DemoAd />
+            </div>
           </Grid>
           <Grid item md={6}>
             <div id="home-center-wrapper">
               <InputBox />
               <PollCard />
+              <DemoAdMobile />
               <UpdateCard />
               {children}
             </div>

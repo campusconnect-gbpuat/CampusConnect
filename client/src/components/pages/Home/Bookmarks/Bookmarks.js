@@ -7,6 +7,7 @@ import { LoadingPost } from "../Post/LoadingPost"
 import { BookmarksContent } from "./components/BookmarksContent"
 import { AuthContext } from "../../../../context/authContext/authContext"
 import HeaderMobile from "../../../common/Header/HeaderMobile"
+import DemoAd from "../../../common/Base/Ad"
 
 export const Bookmarks = () => {
   const userContext = useContext(UserContext)
@@ -59,6 +60,9 @@ export const Bookmarks = () => {
         <Grid container spacing={3} justifyContent="center">
           <Grid item md={3}>
             <HomeSideBar />
+            <div id="demo">
+              <DemoAd />
+            </div>
           </Grid>
           <Grid item md={9}>
             <Paper variant="elevation" elevation={3} className="p-3" style={styleTheme}>

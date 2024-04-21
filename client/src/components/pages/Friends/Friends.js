@@ -9,6 +9,7 @@ import { useContext } from "react"
 import { useEffect } from "react"
 import { UserContext } from "../../../context/userContext/UserContext"
 import HeaderMobile from "../../common/Header/HeaderMobile"
+import DemoAd from "../../common/Base/Ad"
 
 export const Friends = () => {
   const authContext = useContext(AuthContext)
@@ -30,6 +31,9 @@ export const Friends = () => {
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={10} md={3}>
             <HomeSideBar />
+            <div id="demo">
+              <DemoAd />
+            </div>
           </Grid>
           <Grid item xs={10} md={6}>
             <FriendsTab />

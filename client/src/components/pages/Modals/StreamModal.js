@@ -84,7 +84,7 @@ export const StreamModal = ({
             <Modal.Body style={styleTheme}>
                 <form onSubmit={handleForm}>
                     <Grid container justifyContent="space-between" direction="row" spacing={3}>
-                        <Grid item container direction="column">
+                        <Grid item container direction="column" md={6}>
                             <Grid item>
                                 <TextField
                                     className={`${classes.textField}`}
@@ -93,6 +93,7 @@ export const StreamModal = ({
                                     size="small"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
+                                    fullWidth
                                 />
                             </Grid>
                             <Grid item>   
@@ -103,6 +104,7 @@ export const StreamModal = ({
                                     size="small"
                                     value={type}
                                     onChange={(e) => setType(e.target.value)}
+                                    fullWidth
                                 />
                             </Grid>
                             <Grid item>
@@ -113,6 +115,7 @@ export const StreamModal = ({
                                     size="small"
                                     value={organizer}
                                     onChange={(e) => setOrganizer(e.target.value)}
+                                    fullWidth
                                 />
                             </Grid>
                             <Grid item>
@@ -123,6 +126,7 @@ export const StreamModal = ({
                                     size="small"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
+                                    fullWidth
                                 />
                             </Grid>
                             <Grid item>
@@ -133,42 +137,44 @@ export const StreamModal = ({
                                     size="small"
                                     value={time}
                                     onChange={(e) => setTime(e.target.value)}
+                                    fullWidth
                                 />
                             </Grid>
                             <Grid item>
                                 <Form.File
-                                    type="file"
-                                    onChange={(e) => {
-                                        setUploadFile(e.target.files[0])
-                                        setPreview(URL.createObjectURL(e.target.files[0]))
-                                    }}
-                                    label="Upload media"
-                                    multiple
+                                type="file"
+                                onChange={(e) => {
+                                    setUploadFile(e.target.files[0])
+                                    setPreview(URL.createObjectURL(e.target.files[0]))
+                                }}
+                                label="Upload media"
+                                multiple
                                 />
                             </Grid>
                         </Grid>
                         <Grid item md={6}>
-                            {uploadFile || preview ? (
-                                <img src={preview} alt="input file" width="100%" />
-                            ) : (
-                                <div
-                                className="container"
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    height: "60%",
-                                    fltrueexDirection: "column",
-                                }}
-                                >
-                                <AddPhotoAlternateIcon fontSize="large" />
-                                <h6>Image Preview</h6>
-                                </div>
-                            )}
+                        {uploadFile || preview ? (
+                            <img src={preview} alt="input file" width="100%" />
+                        ) : (
+                            <div
+                            className="container"
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                height: "60%",
+                                fltrueexDirection: "column",
+                            }}
+                            >
+                            <AddPhotoAlternateIcon fontSize="large" />
+                            <h6>Image Preview</h6>
+                            </div>
+                        )}
                         </Grid>
                     </Grid>
                 </form>
             </Modal.Body>
+
             <Modal.Footer style={styleTheme}>
                 <Button size="small" onClick={handleModal} style={styleTheme}>
                     Discard
