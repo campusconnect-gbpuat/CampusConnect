@@ -28,10 +28,18 @@ export const Home = ({ children }) => {
     // console.log(userContext);
     requestFirebaseNotificationPermission().then((token) => {
       if(authContext.user.role !== 2){
-        subscribeUserToTopic(token, "campus").catch((error) => {
-          console.error("Subscription error: ", error);
+        subscribeUserToTopic(token, "campus").then(() => {
+          console.log("Subscribed to common topic");
+        }).catch((error) => {
+          console.error("Subscription error (common): ", error);
         });
       }
+      let self_topic = `${authContext.user._id}_self`;
+      subscribeUserToTopic(token, self_topic).then(() => {
+        console.log("Subscribed to self topic");
+      }).catch((error) => {
+        console.error("Subscription error (self): ", error);
+      });
       userContext.user.friendList.forEach((friend) => {
         let topic = friend._id;
         subscribeUserToTopic(token, topic).then(() => {

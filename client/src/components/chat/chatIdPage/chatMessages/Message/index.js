@@ -28,6 +28,21 @@ export const Message = ({ me, userData, message }) => {
   }, [message]);
   // console.log(userData);
 
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#151515", color: "white" }
+      : { background: "#DEDEDE", color: "black" };
+
+  const styleTheme2 =
+  authContext.theme === "dark"
+    ? { background: "black", color: "white" }
+    : { background: "white", color: "black" };
+
+  const styleTheme3 =
+  authContext.theme === "dark"
+    ? { color: "#03DAC6", borderColor: "#03DAC6" }
+    : { color: "blue", borderColor: "blue" }
+
   const handleDeleteModal = () => {
     setPopOver(false);
     setModalState({
@@ -76,9 +91,10 @@ export const Message = ({ me, userData, message }) => {
             ? `${styles.messageInfo} ${styles.meArc}`
             : `${styles.messageInfo} ${styles.otherArc}`
         }
+        style={styleTheme}
       >
         <div className={styles.userName}>
-          <p>{me ? "You" : `${userData?.name}`}</p>
+          <p style={styleTheme3}>{me ? "You" : `${userData?.name}`}</p>
           <span
             className={
               isMessageDeletedForMe ? `${styles.hidden}` : styles.verticalIcon
@@ -89,9 +105,9 @@ export const Message = ({ me, userData, message }) => {
               style={{ fontSize: "1rem", marginLeft: "1rem" }}
             />
             {popOver && !isMessageDeletedForMe && (
-              <div className={styles.deleteOrEdit}>
+              <div className={styles.deleteOrEdit} style={styleTheme2}>
                 <span onClick={handleDeleteModal}>
-                  delete
+                  Delete
                   <DeleteIcon
                     onClick={() => setPopOver(!popOver)}
                     style={{ fontSize: "1rem", marginLeft: "4px" }}
@@ -99,7 +115,7 @@ export const Message = ({ me, userData, message }) => {
                 </span>
                 {isOwnerofMessage && (
                   <span onClick={() => setPopOver(!popOver)}>
-                    edit{" "}
+                    Edit{" "}
                     <EditIcon
                       onClick={() => setPopOver(!popOver)}
                       style={{ fontSize: "1rem", marginLeft: "4px" }}

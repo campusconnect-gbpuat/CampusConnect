@@ -13,6 +13,11 @@ const ChatWallpaper = () => {
   const { chatId, talkingWithId, setChatWallpaper } = useContext(ChatContext);
   const authContext = useContext(AuthContext);
 
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#151515", color: "white" }
+      : { background: "white", color: "black" };
+
   const isCurrentModalOpen =
     modalState.type === ModalType.ChatWallPapper && modalState.open;
 
@@ -83,7 +88,7 @@ const ChatWallpaper = () => {
   return (
     <div className={styles.modal}>
       <div onClick={onClose} className={styles.modalDropShadow}></div>
-      <div className={wallpaperStyles.ModalContainer}>
+      <div className={wallpaperStyles.ModalContainer} style={styleTheme}>
         <div className={styles.modalheader}>
           <h2>Select Chat Wallpaper</h2>
           <div

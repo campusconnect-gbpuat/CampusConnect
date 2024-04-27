@@ -18,6 +18,11 @@ const DeleteOrEditModal = () => {
     return null;
   }
 
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#151515", color: "white" }
+      : { background: "white", color: "black" };
+
   const deleteForMeHandler = async () => {
     try {
       const chats = await getDoc(doc(db, "chats", chatId));
@@ -109,7 +114,7 @@ const DeleteOrEditModal = () => {
   return (
     <div className={styles.modal}>
       <div onClick={onClose} className={styles.modalDropShadow}></div>
-      <div className={styles.ModalContainer}>
+      <div className={styles.ModalContainer} style={styleTheme}>
         <div className={styles.modalheader}>
           <h2>Delete message?</h2>
           <p>You can delete messages for everyone or just for yourself</p>

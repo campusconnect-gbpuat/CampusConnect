@@ -15,6 +15,7 @@ import { AuthContext } from "../../../../context/authContext/authContext"
 import { ButtonLoading } from "../../../Loading_Backdrop/ButtonLoading"
 import { API } from "../../../../utils/proxy"
 import { useNavigate } from "react-router-dom"
+import { sendNotificationToUser } from "../../../../utils/notification"
 
 export const FriendCard = ({ friend, type }) => {
   const navigate = useNavigate();
@@ -64,18 +65,20 @@ export const FriendCard = ({ friend, type }) => {
         {type === "request" && (
           <>
             <Button
-              onClick={(e) =>
+              onClick={(e) => {
                 handleClickBtn(e, userContext.acceptFriendRequest)
-              }
+                sendNotificationToUser("New Friend", `${authContext.user.name} has accepted your friend request!`, `${friend._id}_self`);
+              }}
               style={clickStyleTheme}
             >
               {loading ? <ButtonLoading /> : "Accept"}
               {/* Accept */}
             </Button>
             <Button
-              onClick={(e) =>
+              onClick={(e) => {
                 handleClickBtn(e, userContext.rejectFriendRequest)
-              }
+                sendNotificationToUser("Friend Request Update", `${authContext.user.name} has declined your friend request`, `${friend._id}_self`);
+              }}
               style={clickStyleTheme}
             >
               {loading ? <ButtonLoading /> : "Delete"}
@@ -85,7 +88,12 @@ export const FriendCard = ({ friend, type }) => {
         )}
         {type === "friend" && (
           <>
-            <Button onClick={(e) => handleClickBtn(e, userContext.unFriend)} style={{ color: "red" }}>
+            <Button onClick={(e) => {
+                handleClickBtn(e, userContext.unFriend)
+                sendNotificationToUser("Friend List Update", `${authContext.user.name} has removed you from their friends list`, `${friend._id}_self`);
+              }} 
+              style={{ color: "red" }}
+            >
               {loading ? <ButtonLoading /> : "Remove friend"}
               {/* Unfriend */}
             </Button>

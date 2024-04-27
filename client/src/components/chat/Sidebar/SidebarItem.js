@@ -24,6 +24,11 @@ const SidebarItem = ({ chat }) => {
     setChatWallpaper(chat?.userPerference?.chatWallpaper);
   };
 
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#151515", color: "white" }
+      : { background: "#DEDEDE", color: "black" };
+
   const userData = useGetUserData(chat?.talkingWith?.userId);
 
   const activeChat = chatId === chat?.chatId;
@@ -90,6 +95,7 @@ const SidebarItem = ({ chat }) => {
           : styles.SidebarItem
       }
       onClick={handleSelect}
+      style={styleTheme}
     >
       <div className={styles.avatar}>
         {/*avatar div  */}

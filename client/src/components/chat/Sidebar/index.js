@@ -18,6 +18,10 @@ export const Sidebar = () => {
   //   1. fetch the userChats form firebase and render the chat
   //2. create a function for creating a new chat
   //3. search box for searching the chat list
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#212121", color: "white" }
+      : { background: "#DEDEDE", color: "black" };
 
   useEffect(() => {
     const getUserChats = () => {
@@ -42,6 +46,7 @@ export const Sidebar = () => {
       className={[
         chatId && isTabletOrMobile ? chatStyles.isActiveChat : [styles.sidebar],
       ]}
+      style={styleTheme}
     >
       <div className={styles.sidebarFixedContainer}>
         {/*  */}

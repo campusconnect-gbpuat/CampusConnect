@@ -27,6 +27,16 @@ export const ChatAction = ({ userData }) => {
   const { chatId } = useContext(ChatContext);
   const authContext = useContext(AuthContext);
 
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#151515", color: "white" }
+      : { background: "#DEDEDE", color: "black" };
+  
+  const styleTheme2 =
+  authContext.theme === "dark"
+    ? { background: "black", color: "white" }
+    : { background: "white", color: "black" };
+
   const onChangeTextField = (e) => {
     e.preventDefault();
     setInputVal(e.target.value);
@@ -143,14 +153,14 @@ export const ChatAction = ({ userData }) => {
     });
   };
   return (
-    <div className={styles.chatAction}>
+    <div className={styles.chatAction} style={styleTheme}>
       <div className={styles.actionButton}>
         {/* emoji-mart */}
         <button onClick={handleEmoji} className={styles.icon}>
-          <EmojiEmotions />
+          <EmojiEmotions style={styleTheme} />
         </button>
         <button onClick={handleDocs} className={styles.icon}>
-          <DockOutlined />
+          <DockOutlined style={styleTheme} />
         </button>
 
         <div
@@ -168,15 +178,16 @@ export const ChatAction = ({ userData }) => {
               ? `${styles.popover} ${styles.popovershow}`
               : styles.popover
           }
+          style={styleTheme}
         >
-          <div className={styles.documentUploader}>
+          <div className={styles.documentUploader} style={styleTheme2}>
             <h3>Uploads </h3>
-            <button onClick={handleImageModal}>
-              <ImageIcon />
+            <button onClick={handleImageModal} style={styleTheme}>
+              <ImageIcon style={styleTheme} />
               Images
             </button>
-            <button onClick={handleDocumentModal}>
-              <DockOutlined />
+            <button onClick={handleDocumentModal} style={styleTheme}>
+              <DockOutlined style={styleTheme} />
               Documents
             </button>
           </div>
@@ -200,7 +211,7 @@ export const ChatAction = ({ userData }) => {
         ></textarea>
       </div>
       <button onClick={handleSendMessage} className={[styles.icon]}>
-        <Telegram />
+        <Telegram style={styleTheme} />
       </button>
     </div>
   );

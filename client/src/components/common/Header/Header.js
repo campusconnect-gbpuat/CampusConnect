@@ -245,13 +245,20 @@ const Header = () => {
                   if(Notification.permission === "granted"){
                     requestFirebaseNotificationPermission().then((token) => {
                       if(authContext.user.role !== 2){
-                        unsubscribeUserFromTopic(token, "campus").catch((error) => {
-                          console.error("Unsubscription error: ", error);
+                        unsubscribeUserFromTopic(token, "campus").then(() => {
+                          console.log("Unsubscribed (common)");
+                        }).catch((error) => {
+                          console.error("Unsubscription error (common): ", error);
                         });
                       }
+                      let self_topic = `${authContext.user._id}_self`;
+                      unsubscribeUserFromTopic(token, self_topic).then(() => {
+                        console.log("Unsubscribed (self)");
+                      }).catch((error) => {
+                        console.error("Unsubscription error (self): ", error);
+                      });
                       userContext.user.friendList.forEach((friend) => {
                         let topic = friend._id;
-                        console.log(topic);
                         unsubscribeUserFromTopic(token, topic).then(() => {
                           console.log("Unsubscribed");
                         }).catch((error) => {

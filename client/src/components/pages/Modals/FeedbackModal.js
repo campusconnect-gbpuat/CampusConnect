@@ -1,5 +1,5 @@
 import { Button, Snackbar, SnackbarContent } from "@material-ui/core"
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useRef } from "react"
 import { Modal } from "react-bootstrap"
 import { makeStyles } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
@@ -38,7 +38,37 @@ export const FeedbackModal = ({ show, onhide }) => {
     setValue(event.target.value)
   }
 
-  const handleSubmit = async () => {
+  const form = useRef();
+  
+  const sendEmail = async () => {
+    const serviceId = 'service_fbyt6mn';
+    const templateId = 'template_y1rgpul';
+    const my_id = 'AkRoYSJ3iao29j11L';
+    const name = 'Campus Connect';
+
+    const data = {
+      service_id: serviceId,
+      template_id: templateId,
+      user_id: my_id,
+      template_params: {
+        from_name: name,
+        user_name: authContext.user.name,
+        user_id: authContext.user._id,
+        message: value,
+      }
+    };
+
+    try {
+      const res = await axios.post("https://api.emailjs.com/api/v1.0/email/send", data);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const formData = new FormData()
     formData.append("feedback", value)
     formData.append("picture", picture)
@@ -66,12 +96,15 @@ export const FeedbackModal = ({ show, onhide }) => {
         // console.log(response)
       }
     } catch (error) {
-      setLoading(false)
-      setColor("tomato")
-      setError(error.response.data.errorMsg)
-      // console.log(error.response.data.errorMsg)
+      setColor("tomato");
+      setError(error.response?.data?.errorMsg || "An error occurred");
+    } finally {
+      setLoading(false);
     }
+    sendEmail();
+    onhide();
   }
+
   const handleClose = () => {
     setColor(null)
     setLoading(false)
@@ -104,8 +137,9 @@ export const FeedbackModal = ({ show, onhide }) => {
     authContext.theme === "dark"
       ? { background: "#121212", color: "whitesmoke" }
       : { background: "white", color: "black" }
+  
   const styleThemeMain =
-    authContext.theme === "dark" ? { background: "rgb(0 0 0 / 88%)" } : null
+    authContext.theme === "dark" ? { background: "rgb(0 0 0 / 88%)" } : { background: "rgba(0, 0, 0, 0.555)" }
 
   const useStyles = makeStyles((theme) => ({
     textField: {
@@ -152,6 +186,7 @@ export const FeedbackModal = ({ show, onhide }) => {
               noValidate
               autoComplete="off"
               onSubmit={handleSubmit}
+              ref={form}
             >
               <div className="text-center">
                 <TextField
@@ -163,6 +198,7 @@ export const FeedbackModal = ({ show, onhide }) => {
                   variant="outlined"
                   value={value}
                   onChange={handleChange}
+                  name="message"
                   className={`w-100 mx-auto ${classes.textField}`}
                 />
                 <input
@@ -179,7 +215,7 @@ export const FeedbackModal = ({ show, onhide }) => {
                 <label htmlFor="contained-button-file">
                   <Button variant="contained" color="primary" component="span">
                     <FontAwesomeIcon icon={faPaperclip} className="mr-2" />
-                    Share a Screenshot or a Video
+                    Share a Screenshot
                   </Button>
                 </label>
               </div>

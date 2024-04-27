@@ -28,6 +28,11 @@ const FileUpload = () => {
     return null;
   }
 
+  const styleTheme =
+    authContext.theme === "dark"
+      ? { background: "#151515", color: "white" }
+      : { background: "white", color: "black" };
+
   const fileUploadHandler = (event) => {
     event.preventDefault();
     console.log(event);
@@ -119,6 +124,7 @@ const FileUpload = () => {
       <div onClick={ModalCloseHandler} className={styles.modalDropShadow}></div>
       <div
         className={`${styles.ModalContainer} ${fileUploadstyles.ModalContainer}`}
+        style={styleTheme}
       >
         <div className={styles.modalheader}>
           <h2>{`Upload ${modalState.data?.name}`}</h2>
