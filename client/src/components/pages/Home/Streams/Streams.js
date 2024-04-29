@@ -58,7 +58,7 @@ export const Streams = () => {
                             return (
                                 <Card elevation={1} className="mb-3" style={styleTheme}>
                                     <CardContent style={{ padding: '0 0 16px 0' }}>
-                                        <Grid container justifyContent="space-between" alignItems="flex-start">
+                                        <Grid container justifyContent="space-between" alignItems="flex-start" direction="column">
                                             <Grid item>
                                                 <div className="centered-image-container">
                                                     {st.picture && (
@@ -66,7 +66,7 @@ export const Streams = () => {
                                                         className="centered-image"
                                                         height="100%"
                                                         src={`https://campusconnect-cp84.onrender.com/${st.picture[0]}`}
-                                                        alt={st.picture}
+                                                        alt="live_stream.png"
                                                     />
                                                     )}
                                                 </div>

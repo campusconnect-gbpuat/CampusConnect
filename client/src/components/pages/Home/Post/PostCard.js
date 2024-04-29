@@ -51,6 +51,11 @@ export const PostCard = ({ post }) => {
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes.length);
   const [moreOption, setMoreOption] = useState(null);
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleComments = () => {
+    setExpanded(!expanded);
+  };
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget);
   };
@@ -226,7 +231,7 @@ export const PostCard = ({ post }) => {
             className="centered-image"
             height="100%"
             src={`https://campusconnect-cp84.onrender.com/${post.picture[0]}`}
-            alt={post.picture[0]}
+            alt="post.png"
           />
         )}
       </div>
@@ -243,7 +248,7 @@ export const PostCard = ({ post }) => {
                 <FontAwesomeIcon icon={faHeartRegualar} style={styleTheme} />
               )}
             </IconButton>
-            <IconButton>
+            <IconButton onClick={toggleComments}>
               <FontAwesomeIcon icon={faComment} style={styleTheme} />
             </IconButton>
             <IconButton>
@@ -261,7 +266,7 @@ export const PostCard = ({ post }) => {
           </Grid>
         </Grid>
       </CardActions>
-      <Accordion variant="elevation" style={styleTheme}>
+      <Accordion expanded={expanded} onChange={toggleComments} variant="elevation" style={styleTheme}>
         <AccordionSummary>
           <Grid container justifyContent="space-between">
             <Grid item>

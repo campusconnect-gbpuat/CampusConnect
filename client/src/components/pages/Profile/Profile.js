@@ -18,6 +18,7 @@ import { AuthContext } from "../../../context/authContext/authContext";
 import { BlogContext } from "../../../context/blogContext/BlogContext";
 import { PostContext } from "../../../context/postContext/postContext";
 import { UserContext } from "../../../context/userContext/UserContext";
+import { AdsContext } from "../../../context/adsContext/AdsContext";
 import Header from "../../common/Header/Header";
 import { InputBox } from "../Home/InputBox";
 import { EditProfileModal } from "../Modals/EditProfileModal";
@@ -43,9 +44,11 @@ export const Profile = () => {
   const blogContext = useContext(BlogContext);
   const userContext = useContext(UserContext);
   const authContext = useContext(AuthContext);
+  const adsContext = useContext(AdsContext);
   const [data, setData] = useState(null);
   const [dataPost, setDataPost] = useState([]);
   const [dataBlog, setDataBlog] = useState([]);
+  const [dataAds, setDataAds] = useState([]);
   const [type, setType] = useState("post");
   const [picModal, setPicModal] = useState(false);
   const [editStatus, setEditStatus] = useState(false);
@@ -88,9 +91,14 @@ export const Profile = () => {
       const abc = await blogContext.getAllBlogsByUserId(userId);
       setDataBlog(abc);
     }
+    async function fetchAdsByUser() {
+      const abc = await adsContext.getAllAdsByUser(userId);
+      setDataAds(abc);
+    }
     if (userContext.user) {
       fetchPostsByUser();
       fetchBlogsByUser();
+      fetchAdsByUser();
     }
     // setData(abc.data)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,7 +114,7 @@ export const Profile = () => {
       setType(typeOf);
     }
     if (typeOf === "ads") {
-      // setData(dataAd)
+      setData(dataAds);
       setType(typeOf);
     }
     if (typeOf === "bookmark") {

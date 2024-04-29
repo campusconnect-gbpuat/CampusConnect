@@ -37,6 +37,27 @@ export const AdsState = ({ children }) => {
       })
     }
   }
+
+  const getAllAdsByUser = async (userId) => {
+    try {
+      const response = await axios.get(`${API}/${userId}/ads`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("_token"))}`,
+        },
+      })
+      dispatch({
+        type: ADS_SUCCESS,
+      })
+      const { data } = response
+      return data
+    } catch (error) {
+      dispatch({
+        type: ADS_ERROR,
+        payload: error.response.data.errorMsg,
+      })
+    }
+  }
+
   const createAds = async (formData, userId) => {
     try {
       dispatch({
@@ -126,6 +147,7 @@ export const AdsState = ({ children }) => {
         loading: state.loading,
         success: state.success,
         getAllAds,
+        getAllAdsByUser,
         createAds,
         deleteAd,
         updateAd,

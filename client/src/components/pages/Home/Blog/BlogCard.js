@@ -205,9 +205,6 @@ export const BlogCard = ({ blog }) => {
                 <MenuItem onClick={handleClose} style={styleTheme}>
                   Share
                 </MenuItem>
-                <MenuItem onClick={handleClose} style={styleTheme}>
-                  Bookmark
-                </MenuItem>
 
                 <MenuItem onClick={handleClose} style={styleTheme}>
                   Report blog
@@ -246,7 +243,7 @@ export const BlogCard = ({ blog }) => {
               className="centered-image"
               height="100%"
               src={`https://campusconnect-cp84.onrender.com/${blog.picture}`}
-              alt={blog.picture}
+              alt="blog.png"
             />
           )}
         </div>

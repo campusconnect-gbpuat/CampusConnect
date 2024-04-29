@@ -11,21 +11,51 @@ import {
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Moment from "react-moment";
 import { useNavigate } from "react-router-dom";
 import { AdsContext } from "../../../../context/adsContext/AdsContext";
 import { AuthContext } from "../../../../context/authContext/authContext";
-// import { UserContext } from "../../../../context/userContext/UserContext"
+import { UserContext } from "../../../../context/userContext/UserContext"
 import { API, CDN_URL } from "../../../../utils/proxy";
 import { AdsModal } from "../../Modals/AdsModal";
 
 export const AdsCard = ({ ads }) => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
-  // const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext)
   const adsContext = useContext(AdsContext);
+  const [bookmarkStatus, setBookmarkStatus] = useState(false);
   const [moreOption, setMoreOption] = useState(null);
+
+  const handleBookmarkBtn = () => {
+    handleClose();
+    const formData = {
+      type: ads.objType,
+      typeId: ads._id,
+    };
+    if (!bookmarkStatus) {
+      userContext.bookmarkItem(authContext.user._id, formData);
+      setBookmarkStatus(true);
+    } else {
+      userContext.unBookmarkItem(authContext.user._id, formData);
+      setBookmarkStatus(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!userContext.loading) {
+      userContext.user.bookmark.ads.map((item) => {
+        if (item._id === ads._id) {
+          setBookmarkStatus(true);
+        } else {
+          setBookmarkStatus(false);
+        }
+        return 0;
+      });
+    }
+  }, [ads._id, userContext.loading, userContext.user.bookmark.ads]);
+
   const handleMoreOption = (e) => {
     setMoreOption(e.currentTarget);
   };
@@ -97,8 +127,8 @@ export const AdsCard = ({ ads }) => {
               <MenuItem onClick={handleClose} style={styleTheme}>
                 Share
               </MenuItem>
-              <MenuItem onClick={handleClose} style={styleTheme}>
-                Bookmark
+              <MenuItem onClick={handleBookmarkBtn} style={styleTheme}>
+                {bookmarkStatus ? "Remove Bookmark" : "Bookmark"}
               </MenuItem>
 
               <MenuItem onClick={handleClose} style={styleTheme}>
@@ -142,7 +172,7 @@ export const AdsCard = ({ ads }) => {
               className="centered-image"
               height="100%"
               src={`https://campusconnect-cp84.onrender.com/${ads.picture[0]}`}
-              alt={ads.picture[0]}
+              alt="ad.png"
             />
           )}
         </div>
