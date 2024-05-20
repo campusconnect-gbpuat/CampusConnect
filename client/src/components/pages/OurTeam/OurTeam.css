@@ -26,7 +26,6 @@
   display: flex;
   flex-direction: column;
   padding-top: 80px;
-  padding-left: 16.7%;
 }
 
 .member-photo:hover {
@@ -44,15 +43,5 @@
 @media (max-width: 768px) {
   .our-group-container {
     padding-top: 40px;
-  }
-
-  .team {
-    padding-left: 16.47%; 
-  }
-}
-
-@media (min-width: 992px) {
-  .team {
-    padding-left: 80px;
   }
 }
