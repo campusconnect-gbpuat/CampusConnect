@@ -21,13 +21,6 @@
   transition: transform 0.3s ease;
 }
 
-.team {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding-top: 80px;
-}
-
 .member-photo:hover {
   transform: scale(1.05);
 }

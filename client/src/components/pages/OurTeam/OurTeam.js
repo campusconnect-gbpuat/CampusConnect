@@ -21,16 +21,21 @@ export const OurTeam = () => {
       ? { background: "#151515", color: "white" }
       : { background: "white", color: "black" };
 
+  const BackgroundStyleTheme =
+    authContext.theme === "dark"
+      ? { backgroundColor: "black" }
+      : { backgroundColor: "whitesmoke" };
+
   const clickStyleTheme =
   authContext.theme === "dark"
     ? { color: "#03DAC6" }
     : { color: "blue" }
     
   return (
-    <div className="team">
+    <div className="home">
       <HeaderMobile />
       <Header />
-      <Container className="our-group-container mt-4">
+      <Container className="our-group-container mt-4" style={{ ...BackgroundStyleTheme }}>
         <Row className="justify-content-center">
           {members.slice(0, 3).map((member, index) => (
             <div key={index} className="text-center">
