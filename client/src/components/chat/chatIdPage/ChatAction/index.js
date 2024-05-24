@@ -45,6 +45,32 @@ export const ChatAction = ({ userData }) => {
     setInputVal(e.target.value);
   };
 
+  const formatNotificationMessage = (sendMessage) => {
+    const maxLength = 50;
+    if (sendMessage.length > maxLength) {
+        let trimmedMessage = sendMessage.slice(0, maxLength);
+        trimmedMessage = trimmedMessage.trimEnd();
+        return trimmedMessage + "...";
+    } else {
+        return sendMessage;
+    }
+  }
+
+  const getUserAvatar = async () => {
+    const avatarUrl = `${API}/pic/user/${authContext?.user?._id}`;
+    try {
+        const response = await fetch(avatarUrl);
+        if (response.ok) {
+          return avatarUrl;
+        } else {
+          throw new Error("Avatar not found"); 
+        }
+    } catch (error) {
+        console.error("Error fetching user avatar:", error);
+        return "https://campusconnect-ten.vercel.app/profile.png";
+    }
+  }
+
   useEffect(() => {
     textAreaRef.current.style.height = "auto";
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
@@ -114,8 +140,8 @@ export const ChatAction = ({ userData }) => {
         },
         [chatId + ".date"]: serverTimestamp(),
       });
-      console.log(userData);
-      sendNotificationToUserWithImage(`${userData?.name}`, sendMessage, `${API}/pic/user/${authContext?.user?._id}`, `${userData?.appUserId}_self`);
+      let avatarImage = getUserAvatar();
+      sendNotificationToUserWithImage(`${authContext?.user?.name}`, formatNotificationMessage(sendMessage), avatarImage, `${userData?.appUserId}_self`);
     } catch (error) {
       console.log(error);
     } finally {
