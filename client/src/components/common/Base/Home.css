@@ -117,6 +117,10 @@ iframe-container {
     display: none;
   }
 
+  .poll-arrow {
+    display: none;
+  }
+
   .input-card {
     margin-top: 50px;
   }

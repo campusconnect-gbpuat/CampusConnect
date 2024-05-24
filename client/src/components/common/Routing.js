@@ -15,7 +15,7 @@ import { PostContext } from "../../context/postContext/postContext";
 import { BlogContext } from "../../context/blogContext/BlogContext";
 import { UserContext } from "../../context/userContext/UserContext";
 import { AdsContext } from "../../context/adsContext/AdsContext";
-import { Friends } from "../pages/Friends/Friends";
+import { Connections } from "../pages/Connections/Connections";
 import { AboutUniversity } from "../pages/AboutUniversity/AboutUniversity";
 import { SettingsPrivacy } from "../pages/Setting-Privacy/SettingsPrivacy";
 import { BooksBrowse } from "../pages/BooksBrowse/BooksBrowse";
@@ -200,8 +200,8 @@ export const Routing = () => {
               element={<PrivateRoute component={Profile} />}
             />
             <Route
-              path="/friends"
-              element={<PrivateRoute component={Friends} />}
+              path="/connections"
+              element={<PrivateRoute component={Connections} />}
             />
             <Route
               path="/events"
